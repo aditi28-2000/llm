@@ -33,3 +33,6 @@ def load_data():
 
 # Load data from the database
 df = load_data()
+
+# Print the data using st.dataframe()
+st.dataframe(df)
