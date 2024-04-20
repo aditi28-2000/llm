@@ -17,8 +17,7 @@ st.title("Sentiment Analysis Dashboard")
 # Cached function to get database connection
 @st.cache(allow_output_mutation=True)
 def get_connection():
-    return create_engine("mssql+pyodbc://username:password@DB_server/database?driver=ODBC+Driver+17+for+SQL+Server", 
-                         fast_executemany=True)
+    return create_engine("mssql+pyodbc://username:password@DB_server/database")
 
 # Get cached database connection
 engine = get_connection()
