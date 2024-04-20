@@ -4,3 +4,4 @@ streamlit==1.33.0
 textblob==0.18.0.post0
 wordcloud==1.9.3
 plotly
+mysql-connector-python
