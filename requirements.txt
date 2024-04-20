@@ -6,4 +6,4 @@ wordcloud==1.9.3
 plotly
 mysql-connector-python
 sqlalchemy
-pyodbc
+pymysql
