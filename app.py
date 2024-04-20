@@ -11,16 +11,14 @@ password = st.secrets["password"]
 # Construct the connection string using pymysql dialect
 connection_string = f"mysql+pymysql://{username}:{password}@{server}/{database}"
 
-# Cached function to get database connection
-@st.cache(allow_output_mutation=True)
+# Function to get database connection
 def get_connection():
     return create_engine(connection_string)
 
-# Get cached database connection
+# Get database connection
 engine = get_connection()
 
 # Function to load data from the database
-@st.cache_data(hash_funcs={type(engine): lambda x: x})
 def load_data():
     query = """
         SELECT CreatedTime, SubmissionID, SubmissionTitle, Text, SubmissionURL, Score, NumberOfComments, TopicName
