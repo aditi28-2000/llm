@@ -25,15 +25,17 @@ def get_connection():
 # Get database connection
 engine = get_connection()
 
-
-# Execute SQL query to fetch data from the database
-query = "SELECT * FROM reddit_hn"  # Replace 'your_table' with the actual table name
-try:
-    df = pd.read_sql(query, engine)
-    return df
-except Exception as e:
-    st.error(f"Error loading data from database: {e}")
-    return pd.DataFrame()
+# Function to load data from the database
+def load_data():
+    query = """
+        SELECT * FROM reddit_hn;
+    """
+    try:
+        df = pd.read_sql(query, engine)
+        return df
+    except Exception as e:
+        st.error(f"Error loading data from database: {e}")
+        return pd.DataFrame()
 
 # Load data from the database
 df = load_data()
