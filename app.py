@@ -29,7 +29,7 @@ def load_data():
     try:
         df = pd.read_sql(query, engine)
         return df
-    catch Exception as e:
+    except Exception as e:
         st.error(f"Error loading data from database: {e}")
         return pd.DataFrame()
 
