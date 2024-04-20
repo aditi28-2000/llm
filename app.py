@@ -31,7 +31,7 @@ query = "SELECT * FROM reddit_hn"  # Replace 'your_table' with the actual table 
 try:
     df = pd.read_sql(query, engine)
     return df
-except Exception as e:
+except Exception as e::
     st.error(f"Error loading data from database: {e}")
     return pd.DataFrame()
 
