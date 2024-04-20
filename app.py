@@ -21,7 +21,7 @@ username = st.secrets["username"]
 password = st.secrets["password"]
 
 # Construct the connection string
-connection_string = f"mssql+pyodbc://{username}:{password}@{server}/{database}?driver=ODBC+Driver+17+for+SQL+Server"
+connection_string = f"mssql+pyodbc://{username}:{password}@{server}/{database}?driver=ODBC+Driver+17+for+SQL+Server&timeout=30"
 
 # Cached function to get database connection
 @st.cache(allow_output_mutation=True)
