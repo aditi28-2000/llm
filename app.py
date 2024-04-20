@@ -14,10 +14,19 @@ st.set_page_config(page_title="Sentiment Analysis Dashboard", page_icon=":bar_ch
 
 st.title("Sentiment Analysis Dashboard")
 
+# Retrieve database credentials from secrets.toml
+server = st.secrets["server"]
+database = st.secrets["database"]
+username = st.secrets["username"]
+password = st.secrets["password"]
+
+# Construct the connection string
+connection_string = f"mssql+pyodbc://{username}:{password}@{server}/{database}?driver=ODBC+Driver+17+for+SQL+Server"
+
 # Cached function to get database connection
 @st.cache(allow_output_mutation=True)
 def get_connection():
-    return create_engine("mssql+pyodbc://username:password@DB_server/database")
+    return create_engine(connection_string, fast_executemany=True)
 
 # Get cached database connection
 engine = get_connection()
