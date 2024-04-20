@@ -56,7 +56,7 @@ def calculate_metrics(df):
     positive_posts = len(df[df['Sentiment'] == 'POSITIVE'])
     negative_posts = len(df[df['Sentiment'] == 'NEGATIVE'])
     neutral_posts = len(df[df['Sentiment'] == 'NEUTRAL'])
-    return total_posts, positive_posts, negative posts, neutral_posts
+    return total_posts, positive_posts, negative_posts, neutral_posts
 
 # Calculate metrics
 total_posts, positive_posts, negative_posts, neutral_posts = calculate_metrics(df)
