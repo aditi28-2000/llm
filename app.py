@@ -18,16 +18,12 @@ password = st.secrets["password"]
 # Construct the connection string using pymysql dialect
 connection_string = f"mysql+pymysql://{username}:{password}@{server}/{database}"
 
-# Cache the database connection using st.cache_resource
-@st.cache_resource
 def get_connection():
     return create_engine(connection_string)
 
 # Get database connection
 engine = get_connection()
 
-# Cache the data loading function using st.cache_data
-@st.cache_data
 def load_data():
     query = """
         SELECT * FROM reddit_hn;
