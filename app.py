@@ -218,4 +218,4 @@ else:
     st.write("No data available for average sentiment by topic.")
 
 # Close the connection to the database
-engine.dispose()
+# engine.dispose()
