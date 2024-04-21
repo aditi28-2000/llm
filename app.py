@@ -187,15 +187,22 @@ st.subheader("Word Cloud for All Data")
 if "Text" in df.columns:
     df["Text"].fillna("", inplace=True)
     text = " ".join(df["Text"])
-    wordcloud = WordCloud(width=800, height=400, background_color="white").generate(
-        text
-    )
-    plt.figure(figsize=(10, 5))
-    plt.imshow(wordcloud, interpolation="bilinear")
-    plt.axis("off")
-    st.pyplot()
+    
+    # Generate the word cloud
+    wordcloud = WordCloud(width=800, height=400, background_color="white").generate(text)
+    
+    # Plot the word cloud
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.imshow(wordcloud, interpolation="bilinear")
+    
+    # Hide the axes
+    ax.axis("off")
+    
+    # Display the plot in Streamlit
+    st.pyplot(fig)
 else:
     st.write("No 'Text' column found in the DataFrame.")
+
 
 # Group by topic name and calculate average sentiment polarity
 topic_sentiments = df.groupby("TopicName")["Sentiment"].mean().reset_index()
