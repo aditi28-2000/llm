@@ -218,6 +218,3 @@ else:
     st.write("No data available for average sentiment by topic.")
 
 
-# Close cursor and connection to MySQL database
-cursor.close()
-mydb.close()
