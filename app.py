@@ -6,7 +6,7 @@ from wordcloud import WordCloud
 from textblob import TextBlob
 from PIL import Image
 
-#DATABASE
+# DATABASE
 ######################################################################
 
 # Retrieve database credentials from secrets.toml
@@ -18,14 +18,16 @@ password = st.secrets["password"]
 # Construct the connection string using pymysql dialect
 connection_string = f"mysql+pymysql://{username}:{password}@{server}/{database}"
 
-# Function to get database connection
+# Cache the database connection using st.cache_resource
+@st.cache_resource
 def get_connection():
     return create_engine(connection_string)
 
 # Get database connection
 engine = get_connection()
 
-# Function to load data from the database
+# Cache the data loading function using st.cache_data
+@st.cache_data
 def load_data():
     query = """
         SELECT * FROM reddit_hn;
@@ -34,7 +36,7 @@ def load_data():
         df = pd.read_sql(query, engine)
         return df
     except Exception as e:
-        st.error(f"Error loading data from database: {e}")
+        st.error(f"Error loading data from the database: {e}")
         return pd.DataFrame()
 
 # Load data from the database
@@ -49,11 +51,11 @@ if "Text" in df.columns:
 else:
     st.write("No 'Text' column found in the DataFrame.")
 
-# Load data from CSV before getting sql data
-#df = pd.read_csv("sentiment_reddit_data.csv")
+# Load data from CSV before getting SQL data
+# df = pd.read_csv("sentiment_reddit_data.csv")
 
 ######################################################################
-#DESIGN 
+# DESIGN 
 
 # Load and display the image at the top of the page
 image = Image.open("LLM2.png")
