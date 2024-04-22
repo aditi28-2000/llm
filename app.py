@@ -161,7 +161,7 @@ else:
 
 
 # Group by topic name and calculate average sentiment polarity
-topic_sentiments = df.groupby("TopicName")["Sentiment"].mean().reset_index()
+topic_sentiments = df.groupby("TopicName")["Sentiment_Score"].mean().reset_index()
 
 # Bar graph of average sentiment by topic
 st.subheader("Average Sentiment by Topic")
