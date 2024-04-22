@@ -128,7 +128,7 @@ def direct_feed():
                 color: blue; /* Set the text color to blue */
             }
             div[data-testid="stExpander"] div[role="button"] p {
-                font-size: 4rem;}
+                font-size: 10rem;}
         </style>
     """
     # Apply the custom CSS using st.markdown
