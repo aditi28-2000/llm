@@ -61,7 +61,7 @@ def dashboard():
     values = [negative_posts, positive_posts, neutral_posts]
     
     # Define the color scheme for the pie chart
-    colors = ['red', 'skyblue', 'grey'] 
+    colors = ['grey', 'skyblue', 'red'] 
 
     # Create the pie chart using Plotly Express
     fig_pie = px.pie(values=values, names=labels, hole=0.5, color_discrete_sequence=colors)
