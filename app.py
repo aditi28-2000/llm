@@ -49,7 +49,7 @@ def dashboard():
             }
             /* Increase the font size for text */
             .stText {
-                font-size: 25px; /* Adjust the value as desired */
+                font-size: 70px; /* Adjust the value as desired */
             }
             /* Increase font size */
             body {
