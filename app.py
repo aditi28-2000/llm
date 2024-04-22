@@ -135,7 +135,7 @@ def direct_feed():
     # Display the filtered posts in rectangular boxes
     for index, row in recent_posts.iterrows():
         # Define inline CSS for the expander header
-        expander_header_text = f'<span style="font-size: 18px; font-weight: bold; color: blue;">{row["SubmissionTitle"]} - {row["CreatedTime"]}</span>'
+        expander_header_text = {row["SubmissionTitle"]} - {row["CreatedTime"]}
         
         # Display the rectangular box with a "Read More" expander
         with st.expander(expander_header_text, expanded=False):
