@@ -40,6 +40,22 @@ def dashboard():
     # Load and display the header image
     image = Image.open("LLM2.png")
     st.image(image, use_column_width=True)
+    # Define custom CSS styles
+    custom_css = """
+        <style>
+            /* Increase font size */
+            body {
+                font-size: 18px;
+            }
+            /* Increase image size */
+            .stImage > img {
+                width: 100%;  /* Increase image width to 100% */
+                height: auto; /* Adjust height to maintain aspect ratio */
+            }
+        </style>
+    """
+    # Apply custom CSS styles using st.markdown
+    st.markdown(custom_css, unsafe_allow_html=True)
     
     def calculate_metrics(df):
         total_posts = len(df)
