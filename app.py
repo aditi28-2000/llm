@@ -36,16 +36,32 @@ def load_data():
 df = load_data()
 
 # Define the Dashboard page
-def dashboard():
-    st.title("Dashboard")
-    
+def dashboard():    
     # Load and display the header image
     image = Image.open("LLM2.png")
     st.image(image, use_column_width=True)
     
+    # Calculate metrics
+    total_posts, positive_posts, negative_posts, neutral_posts = calculate_metrics(df)
+    
     # Display the total number of posts
-    total_posts = len(df)
-    st.markdown(f"### Total Number of Posts: {total_posts}")
+    st.info('Total Posts in the Database')
+    st.write(f'Total Posts: {total_posts}')
+    
+    # Create a pie chart for sentiment distribution
+    labels = ['Negative Sentiment', 'Positive Sentiment', 'Neutral Sentiment']
+    values = [negative_posts, positive_posts, neutral_posts]
+    
+    # Define the color scheme for the pie chart
+    colors = ['#FF6F61', '#56B4E9', '#7FBC41']  # Red, blue, and green colors
+
+    # Create the pie chart using Plotly Express
+    fig_pie = px.pie(values=values, names=labels, hole=0.5, color_discrete_sequence=colors)
+    fig_pie.update_traces(textposition='inside', textinfo='percent+label')
+    fig_pie.update_layout(title='Sentiment Distribution')
+    
+    # Display the pie chart in Streamlit
+    st.plotly_chart(fig_pie)
 
 # Define the Direct Feed page
 def direct_feed():
