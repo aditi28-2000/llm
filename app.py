@@ -99,7 +99,60 @@ def dashboard():
 # Define the Direct Feed page
 def direct_feed():
     st.title("Direct Feed")
-    st.write("Direct Feed content goes here")
+
+    # Create filters for TopicName and Sentiment
+    topic_options = df['TopicName'].unique()
+    selected_topic = st.selectbox("Select Topic Name:", topic_options)
+    
+    sentiment_options = ['POSITIVE', 'NEGATIVE', 'NEUTRAL']
+    selected_sentiment = st.selectbox("Select Sentiment:", sentiment_options)
+
+    # Filter the data based on selected filters
+    filtered_df = df[
+        (df['TopicName'] == selected_topic) &
+        (df['Sentiment'] == selected_sentiment)
+    ]
+
+    # Sort the filtered data frame by CreatedTime in descending order
+    filtered_df_sorted = filtered_df.sort_values(by='CreatedTime', ascending=False)
+
+    # Select the 10 most recent posts from the filtered data
+    recent_posts = filtered_df_sorted.head(10)
+    
+    # Display the filtered posts in rectangular boxes
+    for index, row in recent_posts.iterrows():
+        # Define a custom style for the rectangular box
+        custom_style = """
+            <style>
+                .rectangular-box {
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    border-radius: 5px;
+                    margin-bottom: 10px;
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                .rectangular-box p {
+                    margin: 0;
+                }
+            </style>
+        """
+        # Apply the custom style using st.markdown
+        st.markdown(custom_style, unsafe_allow_html=True)
+        
+        # Display the rectangular box
+        st.markdown(
+            f"""
+            <div class="rectangular-box">
+                <p><strong>Created Time:</strong> {row['CreatedTime']}</p>
+                <p><strong>Submission Title:</strong> {row['SubmissionTitle']}</p>
+                <p><strong>Text:</strong> {row['Text'][:200]}{'...' if len(row['Text']) > 200 else ''}</p>
+                <p><strong>Sentiment:</strong> {row['Sentiment']}</p>
+                <p><strong>Topic Name:</strong> {row['TopicName']}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        
 
 # Main function to manage the Streamlit app
 def main():
