@@ -139,20 +139,20 @@ def direct_feed():
         # Apply the custom style using st.markdown
         st.markdown(custom_style, unsafe_allow_html=True)
         
-        # Display the rectangular box
-        st.markdown(
-            f"""
-            <div class="rectangular-box">
-                <p><strong>Created Time:</strong> {row['CreatedTime']}</p>
-                <p><strong>Submission Title:</strong> {row['SubmissionTitle']}</p>
-                <p><strong>Text:</strong> {row['Text'][:200]}{'...' if len(row['Text']) > 200 else ''}</p>
-                <p><strong>Sentiment:</strong> {row['Sentiment']}</p>
-                <p><strong>Topic Name:</strong> {row['TopicName']}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        
+        # Display the rectangular box with a "Read More" expander
+        with st.expander(f"{row['SubmissionTitle']} - {row['CreatedTime']}"):
+            st.markdown(
+                f"""
+                <div class="rectangular-box">
+                    <p><strong>Submission Title:</strong> {row['SubmissionTitle']}</p>
+                    <p><strong>Sentiment:</strong> {row['Sentiment']}</p>
+                    <p><strong>Topic Name:</strong> {row['TopicName']}</p>
+                    <p><strong>Text:</strong> {row['Text']}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
 
 # Main function to manage the Streamlit app
 def main():
