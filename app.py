@@ -84,7 +84,7 @@ def dashboard():
     # Create the pie chart using Plotly Express
     fig_pie = px.pie(values=values, names=labels, hole=0.5, color_discrete_sequence=colors)
     fig_pie.update_traces(textposition='inside', textinfo='percent+label')
-    fig_pie.update_layout(title='Sentiment Distribution')
+    # fig_pie.update_layout(title='Sentiment Distribution')
     
     # Display the pie chart in Streamlit
     st.plotly_chart(fig_pie)
