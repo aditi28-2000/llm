@@ -136,25 +136,7 @@ def calculate_metrics(df):
 # Calculate metrics
 total_posts,positive_posts, negative_posts, neutral_posts = calculate_metrics(df)
 
-# Function to plot time series graph of sentiment counts over time
-def plot_sentiment_counts_over_time(df):
-    # Group the data by CreatedTime and Sentiment, and calculate the counts
-    sentiment_counts = df.groupby(['CreatedTime', 'Sentiment']).size().reset_index(name='Count')
-    
-    # Create a line plot using Plotly Express
-    fig = px.line(sentiment_counts, x='CreatedTime', y='Count', color='Sentiment',
-                  title='Sentiment Counts Over Time', labels={'Count': 'Count of Posts'})
-    
-    # Update x-axis and y-axis titles
-    fig.update_xaxes(title='Date')
-    fig.update_yaxes(title='Count')
-    
-    # Return the figure
-    return fig
 
-# Call the function to plot sentiment counts over time
-fig = plot_sentiment_counts_over_time(df)
-fig.show()
 
 # Word Cloud
 st.subheader("Word Cloud for All Data")
