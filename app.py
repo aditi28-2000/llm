@@ -128,9 +128,10 @@ def direct_feed():
                 color: blue; /* Set the text color to blue */
             }
             /* Target the specific div element using data-testid and class attributes */
-            
-            div[data-testid="stMarkdownContainer"].st-emotion-cache-*.e1nzilvr5 p {
-            font-size: 18px; /* Increase the font size */
+
+            div[data-testid="stMarkdownContainer"].st-emotion-cache-* p {
+           font-size: 18px; /* Increase the font size */
+     }
         }
         </style>
     """
