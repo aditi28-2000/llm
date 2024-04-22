@@ -125,32 +125,34 @@ st.subheader("Sentiment Analysis")
 st.subheader("Basic Statistics")
 st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
 
-# Line graph of Reddit Sentiment Trend by topic
-st.subheader("Reddit Sentiment Trend by Topic Over Time")
-if "SubmissionTitle" in df.columns:
-    grouped_df = (
-        df.groupby([df["CreatedTime"].dt.date, "Sentiment"])
-        .size()
-        .unstack(fill_value=0)
-        .reset_index()
-    )
-    fig, ax = plt.subplots()
-    ax.plot(
-        grouped_df["CreatedTime"], grouped_df["Negative"], label="Negative", color="red"
-    )
-    ax.plot(
-        grouped_df["CreatedTime"],
-        grouped_df["Positive"],
-        label="Positive",
-        color="green",
-    )
-    plt.xlabel("Date")
-    plt.ylabel("Number of Posts")
-    plt.xticks(rotation=45)
-    plt.legend()
-    st.pyplot(fig)
-else:
-    st.write("No 'SubmissionTitle' column found in the DataFrame.")
+# Function to calculate metrics
+def calculate_metrics(df):
+    total_posts = len(df)
+    positive_posts = len(df[df['Sentiment'] == 'POSITIVE'])
+    negative_posts = len(df[df['Sentiment'] == 'NEGATIVE'])
+    neutral_posts = len(df[df['Sentiment'] == 'NEUTRAL'])
+    return total_posts,positive_posts, negative_posts, neutral_posts
+
+# Calculate metrics
+total_posts,positive_posts, negative_posts, neutral_posts = calculate_metrics(df)
+
+# Function to plot time series graph of sentiment counts over time
+def plot_sentiment_counts_over_time(df):
+    # Group the data by CreatedTime and Sentiment, and calculate the counts
+    sentiment_counts = df.groupby(['CreatedTime', 'Sentiment']).size().reset_index(name='Count')
+    
+    # Create a line plot using Plotly Express
+    fig = px.line(sentiment_counts, x='CreatedTime', y='Count', color='Sentiment',
+                  title='Sentiment Counts Over Time', labels={'Count': 'Number of Posts'})
+    
+    # Update the x-axis and y-axis titles
+    fig.update_xaxes(title='Date')
+    fig.update_yaxes(title='Count')
+    
+    return fig
+
+# Plot the time series graph of sentiment counts over time
+plot_sentiment_counts_over_time(df)
 
 # Word Cloud
 st.subheader("Word Cloud for All Data")
