@@ -135,7 +135,7 @@ def direct_feed():
     # Display the filtered posts in rectangular boxes
     for index, row in recent_posts.iterrows():
         # Display the rectangular box with a "Read More" expander
-        with st.expander(f"{row['SubmissionTitle']} - {row['CreatedTime']}", expanded=False):
+         with st.expander(f'<span style="font-size: 20px; color: blue;">{row["SubmissionTitle"]} - {row["CreatedTime"]}</span>', expanded=False):
             # Apply the class name to the expander header for custom styling
             # Using markdown with unsafe_allow_html to apply styles
             st.markdown(f"<style>div[data-testid='stExpander']>div>div:first-of-type {{font-size: 18px; font-weight: bold;}}</style>", unsafe_allow_html=True)
