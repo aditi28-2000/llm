@@ -94,7 +94,7 @@ def dashboard():
     # fig_pie.update_layout(title='Sentiment Distribution')
     
     # Display the pie chart in Streamlit
-    st.plotly_chart(fig_pie)
+    st.plotly_chart(fig_pie, width=800, height=600)
 
 # Define the Direct Feed page
 def direct_feed():
