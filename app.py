@@ -119,42 +119,37 @@ def direct_feed():
     # Select the 10 most recent posts from the filtered data
     recent_posts = filtered_df_sorted.head(10)
     
+    # Define custom CSS for increasing the size of the expander header
+    custom_style = """
+        <style>
+            /* Define styles for the expander header */
+            .expander-header {
+                font-size: 18px; /* Adjust the value as desired */
+                font-weight: bold; /* Add bold text style */
+            }
+        </style>
+    """
+    # Apply the custom style using st.markdown
+    st.markdown(custom_style, unsafe_allow_html=True)
+    
     # Display the filtered posts in rectangular boxes
     for index, row in recent_posts.iterrows():
-        # Define a custom style for the rectangular box
-        custom_style = """
-            <style>
-                .rectangular-box {
-                    border: 1px solid #ccc;
-                    padding: 10px;
-                    border-radius: 5px;
-                    margin-bottom: 10px;
-                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-                }
-                .rectangular-box p {
-                    margin: 0;
-                }
-            </style>
-        """
-        # Apply the custom style using st.markdown
-        st.markdown(custom_style, unsafe_allow_html=True)
-        
-        # Display the rectangular box
-        st.markdown(
-            f"""
-            <div class="rectangular-box">
-                <p><strong>Created Time:</strong> {row['CreatedTime']}</p>
-                <p><strong>Submission Title:</strong> {row['SubmissionTitle']}</p>
-                <p><strong>Sentiment:</strong> {row['Sentiment']}</p>
-                <p><strong>Topic Name:</strong> {row['TopicName']}</p>
-            """,
-            unsafe_allow_html=True
-        )
-        
-        # Add an expander for the "Read More..." feature of the Text field
-        with st.expander("Read More..."):
-            st.markdown(f"<p>{row['Text']}</p>", unsafe_allow_html=True)
-
+        # Display the rectangular box with a "Read More" expander
+        with st.expander(f"{row['SubmissionTitle']} - {row['CreatedTime']}", expanded=False):
+            # Apply the class name to the expander header for custom styling
+            # Using markdown with unsafe_allow_html to apply styles
+            st.markdown(f"<style>div[data-testid='stExpander']>div>div:first-of-type {{font-size: 18px; font-weight: bold;}}</style>", unsafe_allow_html=True)
+            st.markdown(
+                f"""
+                <div class="rectangular-box">
+                    <p><strong>Submission Title:</strong> {row['SubmissionTitle']}</p>
+                    <p><strong>Sentiment:</strong> {row['Sentiment']}</p>
+                    <p><strong>Topic Name:</strong> {row['TopicName']}</p>
+                    <p><strong>Text:</strong> {row['Text']}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
 # Main function to manage the Streamlit app
 def main():
