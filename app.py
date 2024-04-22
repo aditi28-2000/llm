@@ -71,6 +71,8 @@ def dashboard():
     # Display the total number of posts
     st.info('Total Posts in the Database')
     st.write(f'Total Posts: {total_posts}')
+
+    st.title("Sentiment Distribution")
     
     # Create a pie chart for sentiment distribution
     labels = ['Negative Sentiment', 'Positive Sentiment', 'Neutral Sentiment']
