@@ -138,7 +138,7 @@ def direct_feed():
     for index, row in recent_posts.iterrows():
         # Define inline CSS for the expander header
         expander_header_text = f"<p style='font-size:20px;'>{row['SubmissionTitle']} - {row['CreatedTime']}</p>"
-        st.markdown(s, unsafe_allow_html=True) 
+        st.markdown(expander_header_text, unsafe_allow_html=True) 
         
         # Display the rectangular box with a "Read More" expander
         with st.expander(expander_header_text, expanded=False):
