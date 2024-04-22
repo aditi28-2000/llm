@@ -119,25 +119,26 @@ def direct_feed():
     # Select the 10 most recent posts from the filtered data
     recent_posts = filtered_df_sorted.head(10)
     
-    # Define custom CSS for the expander header
+    # Define custom CSS for increasing the size of the expander header
     custom_style = """
         <style>
+            /* Define styles for the expander header */
             .expander-header {
-                font-size: 18px; /* Adjust the font size as desired */
-                font-weight: bold; /* Make the text bold */
-                color: blue; /* Set the text color to blue */
+                font-size: 18px; /* Adjust the value as desired */
+                font-weight: bold; /* Add bold text style */
             }
         </style>
     """
-    # Apply the custom CSS using st.markdown
+    # Apply the custom style using st.markdown
     st.markdown(custom_style, unsafe_allow_html=True)
-
+    
     # Display the filtered posts in rectangular boxes
     for index, row in recent_posts.iterrows():
-        # Define inline CSS for the expander header
-        
         # Display the rectangular box with a "Read More" expander
-        with st.expander({row["SubmissionTitle"]} - {row["CreatedTime"]}, expanded=False):
+         with st.expander({row["SubmissionTitle"]} - {row["CreatedTime"]}, expanded=False):
+            # Apply the class name to the expander header for custom styling
+            # Using markdown with unsafe_allow_html to apply styles
+            st.markdown(f"<style>div[data-testid='stExpander']>div>div:first-of-type {{font-size: 18px; font-weight: bold;}}</style>", unsafe_allow_html=True)
             st.markdown(
                 f"""
                 <div class="rectangular-box">
@@ -149,7 +150,6 @@ def direct_feed():
                 """,
                 unsafe_allow_html=True
             )
-
 
 # Main function to manage the Streamlit app
 def main():
