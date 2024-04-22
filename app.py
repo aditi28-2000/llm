@@ -127,8 +127,10 @@ def direct_feed():
                 font-weight: bold; /* Make the text bold */
                 color: blue; /* Set the text color to blue */
             }
-            div[data-testid="stExpander"] div[role="button"] p {
-                font-size: 4 rem;}
+            /* Target the specific div element using data-testid and class attributes */
+            div[data-testid="stMarkdownContainer"].st-emotion-cache-l9bjmx.e1nzilvr5 p {
+            font-size: 24px; /* Increase the font size */
+        }
         </style>
     """
     # Apply the custom CSS using st.markdown
