@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from textblob import TextBlob
+import plotly.express as px
 from PIL import Image
 
 # DATABASE
@@ -26,7 +27,7 @@ engine = get_connection()
 
 def load_data():
     query = """
-        SELECT * FROM reddit_hn;
+        SELECT * FROM sentiment_analysis;
     """
     try:
         df = pd.read_sql(query, engine)
@@ -37,15 +38,6 @@ def load_data():
 
 # Load data from the database
 df = load_data()
-
-# Calculate sentiment polarity and categorize into negative, neutral, and positive
-if "Text" in df.columns:
-    df["Text"].fillna("", inplace=True)
-    sentiments = [TextBlob(answer).sentiment.polarity if answer else None for answer in df["Text"]]
-    df["Sentiment"] = sentiments
-    df["Sentiment_Category"] = pd.cut(df["Sentiment"], bins=[-1, -0.01, 0.01, 1], labels=["Negative", "Neutral", "Positive"])
-else:
-    st.write("No 'Text' column found in the DataFrame.")
 
 # Load data from CSV before getting SQL data
 # df = pd.read_csv("sentiment_reddit_data.csv")
@@ -80,34 +72,14 @@ st.markdown(header_style, unsafe_allow_html=True)
 # Set the configuration option to disable the PyplotGlobalUseWarning
 st.set_option("deprecation.showPyplotGlobalUse", False)
 
-# Calculate sentiment polarity and categorize into negative, neutral, and positive
-if "Text" in df.columns:
-    # Replace missing values with empty strings
-    df["Text"].fillna("", inplace=True)
-
-    # Calculate sentiment polarity and handle None values
-    sentiments = [
-        TextBlob(answer).sentiment.polarity if answer else None for answer in df["Text"]
-    ]
-    df["Sentiment"] = sentiments
-
-    # Categorize sentiment into negative, neutral, and positive
-    df["Sentiment_Category"] = pd.cut(
-        df["Sentiment"],
-        bins=[-1, -0.01, 0.01, 1],
-        labels=["Negative", "Neutral", "Positive"],
-    )
-else:
-    st.write("No 'Text' column found in the DataFrame.")
-
 # Sidebar layout
 with st.sidebar:
     st.title("Navigation Panel")
     tabs = st.radio("Select a tab:", ["Direct Feed", "Filtered Feed"])
 
     if tabs == "Direct Feed":
-        st.markdown("# Total Reddit Posts: " + str(len(df)))
-        st.subheader("Reddit Post Data")
+        st.markdown("# Total Posts: " + str(len(df)))
+        st.subheader("Reddit and Hackernews Data")
         
         # Display each post inside a bordered box
         for index, row in df.head(10).iterrows():
@@ -128,10 +100,10 @@ with st.sidebar:
         )
         
         # Check if the columns exist in the DataFrame
-        if {"TopicName", "Sentiment_Category"}.issubset(df.columns):
+        if {"TopicName", "Sentiment"}.issubset(df.columns):
             filtered_df = df[
                 (df["TopicName"] == selected_subreddit)
-                & (df["Sentiment_Category"] == selected_sentiment)
+                & (df["Sentiment"] == selected_sentiment)
             ]
             
             # Display filtered posts inside a bordered box
@@ -157,7 +129,7 @@ st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' c
 st.subheader("Reddit Sentiment Trend by Topic Over Time")
 if "SubmissionTitle" in df.columns:
     grouped_df = (
-        df.groupby([df["CreatedTime"].dt.date, "Sentiment_Category"])
+        df.groupby([df["CreatedTime"].dt.date, "Sentiment"])
         .size()
         .unstack(fill_value=0)
         .reset_index()
