@@ -45,7 +45,7 @@ def dashboard():
         <style>
             /* Increase font size */
             body {
-                font-size: 18px;
+                font-size: 22px;
             }
             /* Increase image size */
             .stImage > img {
