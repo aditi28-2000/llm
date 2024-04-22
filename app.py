@@ -136,7 +136,26 @@ def calculate_metrics(df):
 # Calculate metrics
 total_posts,positive_posts, negative_posts, neutral_posts = calculate_metrics(df)
 
+# Function to plot sentiment counts over time
+def plot_sentiment_over_time(df):
+    # Group the data by CreatedTime and Sentiment_Category, and calculate the counts
+    sentiment_counts = df.groupby([df["CreatedTime"].dt.date, "Sentiment_Category"]).size().reset_index(name='Count')
+    
+    # Create a line plot using Plotly Express
+    fig = px.line(sentiment_counts, x='CreatedTime', y='Count', color='Sentiment_Category',
+                  title='Sentiment Analysis Over Time', labels={'Count': 'Count of Posts', 'CreatedTime': 'Date'})
+    
+    # Update plot layout
+    fig.update_xaxes(title='Date')
+    fig.update_yaxes(title='Count')
+    
+    # Return the plot
+    return fig
 
+# Plot the sentiment counts over time and display it in Streamlit
+st.subheader("Sentiment Analysis Over Time")
+fig = plot_sentiment_over_time(df)
+st.plotly_chart(fig)
 
 # Word Cloud
 st.subheader("Word Cloud for All Data")
@@ -159,26 +178,6 @@ if "Text" in df.columns:
 else:
     st.write("No 'Text' column found in the DataFrame.")
 
-
-# Group by topic name and calculate average sentiment polarity
-topic_sentiments = df.groupby("TopicName")["Sentiment_Score"].mean().reset_index()
-
-# Bar graph of average sentiment by topic
-st.subheader("Average Sentiment by Topic")
-if not topic_sentiments.empty:
-    fig, ax = plt.subplots()
-    ax.bar(
-        topic_sentiments["TopicName"],
-        topic_sentiments["Sentiment"],
-        color="blue",
-    )
-    plt.xlabel("Topic")
-    plt.ylabel("Average Sentiment")
-    plt.title("Average Sentiment by Topic")
-    plt.xticks(rotation=45, fontsize=6)
-    st.pyplot(fig)
-else:
-    st.write("No data available for average sentiment by topic.")
 
 # Close the connection to the database
 engine.dispose()
