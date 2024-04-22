@@ -129,7 +129,7 @@ def direct_feed():
             }
             /* Target the specific div element using data-testid and class attributes */
             
-            div[data-testid="stMarkdownContainer"].st-emotion-cache-sh2krr.e1nzilvr5 p {
+            div[data-testid="stMarkdownContainer"].st-emotion-cache.e1nzilvr5 p {
             font-size: 18px; /* Increase the font size */
         }
         </style>
