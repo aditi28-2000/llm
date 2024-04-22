@@ -102,7 +102,7 @@ def direct_feed():
 
     # Create filters for TopicName and Sentiment
     topic_options = df['TopicName'].unique()
-    selected_topic = st.selectbox("Select Topic Name:", topic_options)
+    selected_topic = st.selectbox("Select Language Model:", topic_options)
     
     sentiment_options = ['POSITIVE', 'NEGATIVE', 'NEUTRAL']
     selected_sentiment = st.selectbox("Select Sentiment:", sentiment_options)
