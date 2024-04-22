@@ -77,8 +77,8 @@ def dashboard():
     total_posts, positive_posts, negative_posts, neutral_posts = calculate_metrics(df)
     
     # Display the total number of posts
-    st.info('Total Posts in the Database')
-    st.write(f'Total Posts: {total_posts}')
+    st.info('<span style="font-size: 24px;">Total Posts in the Database</span>', unsafe_allow_html=True)
+    st.write(f'<span style="font-size: 24px;">Total Posts: {total_posts}</span>', unsafe_allow_html=True)
 
     st.title("Sentiment Distribution")
     
