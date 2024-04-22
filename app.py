@@ -139,10 +139,10 @@ total_posts,positive_posts, negative_posts, neutral_posts = calculate_metrics(df
 # Function to plot sentiment counts over time
 def plot_sentiment_over_time(df):
     # Group the data by CreatedTime and Sentiment_Category, and calculate the counts
-    sentiment_counts = df.groupby([df["CreatedTime"].dt.date, "Sentiment_Category"]).size().reset_index(name='Count')
+    sentiment_counts = df.groupby([df["CreatedTime"].dt.date, "Sentiment"]).size().reset_index(name='Count')
     
     # Create a line plot using Plotly Express
-    fig = px.line(sentiment_counts, x='CreatedTime', y='Count', color='Sentiment_Category',
+    fig = px.line(sentiment_counts, x='CreatedTime', y='Count', color='Sentiment',
                   title='Sentiment Analysis Over Time', labels={'Count': 'Count of Posts', 'CreatedTime': 'Date'})
     
     # Update plot layout
