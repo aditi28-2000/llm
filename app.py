@@ -45,11 +45,11 @@ def dashboard():
         <style>
             /* Increase the font size of the info box and other text */
             .stAlert {
-                font-size: 20px; /* Adjust the value as desired */
+                font-size: 25px; /* Adjust the value as desired */
             }
             /* Increase the font size for text */
             .stText {
-                font-size: 20px; /* Adjust the value as desired */
+                font-size: 25px; /* Adjust the value as desired */
             }
             /* Increase font size */
             body {
