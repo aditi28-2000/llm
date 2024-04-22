@@ -41,6 +41,14 @@ def dashboard():
     image = Image.open("LLM2.png")
     st.image(image, use_column_width=True)
     
+    def calculate_metrics(df):
+        total_posts = len(df)
+        positive_posts = len(df[df['Sentiment'] == 'POSITIVE'])
+        negative_posts = len(df[df['Sentiment'] == 'NEGATIVE'])
+        neutral_posts = len(df[df['Sentiment'] == 'NEUTRAL'])
+        return total_posts,positive_posts, negative_posts, neutral_posts
+
+    
     # Calculate metrics
     total_posts, positive_posts, negative_posts, neutral_posts = calculate_metrics(df)
     
