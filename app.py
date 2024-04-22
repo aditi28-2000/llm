@@ -133,6 +133,7 @@ def direct_feed():
                 }
                 .rectangular-box p {
                     margin: 0;
+                    font-size:22px;
                 }
             </style>
         """
