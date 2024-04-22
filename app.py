@@ -143,16 +143,18 @@ def plot_sentiment_counts_over_time(df):
     
     # Create a line plot using Plotly Express
     fig = px.line(sentiment_counts, x='CreatedTime', y='Count', color='Sentiment',
-                  title='Sentiment Counts Over Time', labels={'Count': 'Number of Posts'})
+                  title='Sentiment Counts Over Time', labels={'Count': 'Count of Posts'})
     
-    # Update the x-axis and y-axis titles
+    # Update x-axis and y-axis titles
     fig.update_xaxes(title='Date')
     fig.update_yaxes(title='Count')
     
+    # Return the figure
     return fig
 
-# Plot the time series graph of sentiment counts over time
-plot_sentiment_counts_over_time(df)
+# Call the function to plot sentiment counts over time
+fig = plot_sentiment_counts_over_time(df)
+fig.show()
 
 # Word Cloud
 st.subheader("Word Cloud for All Data")
