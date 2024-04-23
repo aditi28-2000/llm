@@ -125,6 +125,8 @@ def dashboard():
     # Select the top 10 posts with the highest distinct number of comments
     top_10_posts_with_highest_distinct_comments = distinct_comments_df.head(10)
 
+    st.info(f"Top 10 posts with the highest number of comments")
+
     # Display the top 10 posts with the highest distinct number of comments
     st.dataframe(top_10_posts_with_highest_distinct_comments, hide_index=True)
 
