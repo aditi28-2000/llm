@@ -110,7 +110,36 @@ def calculate_sentiment_percentages(df, topic_names):
 
     # Return the DataFrame with the percentages
     return percentages.reset_index()
-    
+
+def plot_word_cloud(df):
+    st.subheader("Word Cloud for All Data")
+    if "Text" in df.columns:
+        df["Text"].fillna("", inplace=True)
+        text = " ".join(df["Text"])
+
+        # Generate the word cloud
+        # Set the background color to match the system background
+        background_color = st.get_option('theme.primaryColor')
+        wordcloud = WordCloud(width=800, height=400, background_color=background_color, contour_color=None, contour_width=0, mode='RGBA').generate(text)
+
+        # Convert the word cloud image to a NumPy array and create an image trace using Plotly
+        wordcloud_img = wordcloud.to_array()
+        fig = go.Figure(go.Image(z=wordcloud_img))
+
+        # Customize the plot
+        fig.update_xaxes(visible=False)
+        fig.update_yaxes(visible=False)
+        fig.update_layout(
+            width=800, 
+            height=400, 
+            margin=dict(l=0, r=0, t=0, b=0)
+        )
+
+        # Display the plot in Streamlit
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.write("No 'Text' column found in the DataFrame.")
+
 # Define the Dashboard page
 import pandas as pd
 import plotly.express as px
@@ -362,30 +391,9 @@ def analytics():
     else:
         st.write(f"No data available for selected TopicName '{selected_topic}'.")
 
-    
-    # Word Cloud
-    st.subheader("Word Cloud for All Data")
-    if "Text" in df.columns:
-        df["Text"].fillna("", inplace=True)
-        text = " ".join(df["Text"])
-        
-        # Generate the word cloud
-        # Set the background color to match the system background
-        background_color = st.get_option('theme.primaryColor')
-        wordcloud = WordCloud(width=800, height=400, background_color=background_color,  contour_color=None, contour_width=0, mode='RGBA' ).generate(text)
-        # wordcloud = WordCloud(width=800, height=400, background_color="white").generate(text)
-        
-        # Plot the word cloud
-        fig, ax = plt.subplots(figsize=(10, 5))
-        ax.imshow(wordcloud, interpolation="bilinear")
-        
-        # Hide the axes
-        ax.axis("off")
-        
-        # Display the plot in Streamlit
-        st.pyplot(fig)
-    else:
-        st.write("No 'Text' column found in the DataFrame.")
+    # Call the function to plot the word cloud
+    st.title("Word Cloud for all Data")
+    plot_word_cloud(df)
 
     # Plot for average sentiment by TopicName
     st.subheader("Average Sentiment by TopicName")
