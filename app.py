@@ -256,26 +256,6 @@ def analytics():
     st.subheader("Basic Statistics")
     st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
 
-    # Calculate sentiment polarity and categorize into negative, neutral, and positive
-    if "Text" in df.columns:
-        # Replace missing values with empty strings
-        df["Text"].fillna("", inplace=True)
-
-        # Calculate sentiment polarity and handle None values
-        sentiments = [
-            TextBlob(answer).sentiment.polarity if answer else None for answer in df["Text"]
-        ]
-        df["Sentiment"] = sentiments
-
-        # Categorize sentiment into negative, neutral, and positive
-        df["Sentiment_Category"] = pd.cut(
-            df["Sentiment"],
-            bins=[-1, -0.01, 0.01, 1],
-            labels=["Negative", "Neutral", "Positive"],
-        )
-    else:
-        st.write("No 'Text' column found in the DataFrame.")
-
     # Line graph of Reddit Sentiment Trend by topic
     # Create a selectbox for choosing a TopicName
     topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
@@ -284,30 +264,36 @@ def analytics():
     # Filter the DataFrame based on the selected TopicName
     filtered_df = df[df['TopicName'] == selected_topic]
 
-    # Line graph of sentiment trend by TopicName over time
-    st.subheader(f"Sentiment Trend by TopicName '{selected_topic}' Over Time")
+    # Check if filtered DataFrame is not empty
     if not filtered_df.empty:
-        # Group the filtered DataFrame by date and sentiment category
+        # Group the filtered DataFrame by date and sentiment
         grouped_df = (
             filtered_df.groupby([filtered_df['CreatedTime'].dt.date, 'Sentiment'])
             .size()
             .unstack(fill_value=0)
             .reset_index()
         )
+
         # Plot the line graph
         fig, ax = plt.subplots()
+        
+        # Plot each sentiment category as a line
         ax.plot(grouped_df['CreatedTime'], grouped_df['Negative'], label='Negative', color='red')
         ax.plot(grouped_df['CreatedTime'], grouped_df['Positive'], label='Positive', color='green')
         ax.plot(grouped_df['CreatedTime'], grouped_df['Neutral'], label='Neutral', color='skyblue')
+        
+        # Set labels and title
         plt.xlabel('Date')
         plt.ylabel('Number of Posts')
         plt.xticks(rotation=45)
         plt.legend()
+        
+        # Display the plot
         st.pyplot(fig)
     else:
         st.write(f"No data available for selected TopicName '{selected_topic}'.")
 
-
+    
     # Word Cloud
     st.subheader("Word Cloud for All Data")
     if "Text" in df.columns:
