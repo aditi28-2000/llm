@@ -110,6 +110,10 @@ def dashboard():
 
     # Display total posts
     st.info(f'Total Posts in the Database: {total_posts}')
+
+    # Display the horizontal bar plot
+    st.title("Sentiment Distribution For Each Languge Model")
+    st.plotly_chart(plot_sentiments_by_topicname(), width=900, height=800)
  
     # Display sentiment distribution
     st.title("Overall Sentiment Distribution")
@@ -147,11 +151,6 @@ def dashboard():
 
     # Group the DataFrame by 'TopicName' and 'Sentiment', and count the number of posts for each combination
     sentiment_grouped_df = df.groupby(['TopicName', 'Sentiment']).size().unstack(fill_value=0)
-
-    
-    # Display the horizontal bar plot
-    st.title("Sentiment Distribution For Each Languge Model")
-    st.plotly_chart(plot_sentiments_by_topicname(), width=900, height=800)
 
 
 # Define the Direct Feed page
