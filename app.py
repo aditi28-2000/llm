@@ -424,7 +424,7 @@ def analytics():
 def main():
     # Sidebar for navigation
     st.sidebar.title("Navigation Panel")
-    page = st.sidebar.radio("Select a page:", ["Dashboard", "Direct Feed", "Analytics"])
+    page = st.sidebar.radio("Select a page:", ["Dashboard", "Analytics", "Direct Feed"])
     
     # Route to the selected page
     if page == "Dashboard":
