@@ -229,6 +229,7 @@ def direct_feed():
 
     # Sort the filtered data frame by CreatedTime in descending order
     filtered_df_sorted = filtered_df.sort_values(by='CreatedTime', ascending=False)
+    filtered_df_sorted = filtered_df_sorted[(filtered_df_sorted['Text'].notnull()) & (filtered_df_sorted['Text'] != 'NULL')]
 
     # Select the 10 most recent posts from the filtered data
     recent_posts = filtered_df_sorted.head(10)
