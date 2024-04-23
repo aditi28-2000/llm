@@ -41,10 +41,14 @@ df = load_data()
 ##############################################################################################
 
 # Define the Dashboard page
+import pandas as pd
+import plotly.express as px
+
 def dashboard():    
     # Load and display the header image
     image = Image.open("LLM2.png")
     st.image(image, use_column_width=True)
+
     # Define custom CSS styles
     custom_css = """
         <style>
@@ -82,17 +86,14 @@ def dashboard():
         posts_per_llm = df.groupby('TopicName')['SubmissionID'].nunique().reset_index()
         return total_posts, total_comments, positive_posts, negative_posts, neutral_posts, posts_per_llm
 
-
-    
     # Calculate metrics
     total_posts, total_comments, positive_posts, negative_posts, neutral_posts, posts_per_llm = calculate_metrics(df)
-
 
     # Display total posts
     st.info(f'Total Posts in the Database: {total_posts}')
  
     # Display sentiment distribution
-    st.title(" Overall Sentiment Distribution")
+    st.title("Overall Sentiment Distribution")
     labels = ['Negative Sentiment', 'Positive Sentiment', 'Neutral Sentiment']
     values = [negative_posts, positive_posts, neutral_posts]
     colors = ['grey', 'red', 'skyblue']
@@ -109,27 +110,38 @@ def dashboard():
     unique_topic_count = df['TopicName'].nunique()
     st.info(f"Distinct Language Models Captured in the Database: {unique_topic_count}")
 
-
     # Rename the columns
     posts_comments_per_llm.columns = ["Language Model", "Total Posts", "Total Comments"]
     # Sort the DataFrame by 'Total Posts' in descending order
     posts_comments_per_llm = posts_comments_per_llm.sort_values(by='Total Posts', ascending=False)
-
     st.dataframe(posts_comments_per_llm, hide_index=True)
 
     # Sort the DataFrame by 'NumberOfComments' in descending order    
     df_sorted_by_comments = df.sort_values(by='NumberOfComments', ascending=False)
-
     # Remove duplicate rows based on 'NumberOfComments' to keep only distinct ones
     distinct_comments_df = df_sorted_by_comments.drop_duplicates(subset='NumberOfComments', keep='first')
     # Select the top 10 posts with the highest distinct number of comments
     top_10_posts_with_highest_distinct_comments = distinct_comments_df.head(10)
-
     st.info(f"Top 10 posts with the highest number of comments")
-
     # Display the top 10 posts with the highest distinct number of comments
     st.dataframe(top_10_posts_with_highest_distinct_comments, hide_index=True)
 
+    # Group the DataFrame by 'TopicName' and 'Sentiment', and count the number of posts for each combination
+    sentiment_grouped_df = df.groupby(['TopicName', 'Sentiment']).size().unstack(fill_value=0)
+    
+    # Create a horizontal bar plot to display the total number of positive, negative, and neutral posts for each TopicName
+    fig_bar = px.bar(
+        sentiment_grouped_df,
+        x=sentiment_grouped_df.index,
+        y=['POSITIVE', 'NEGATIVE', 'NEUTRAL'],
+        orientation='h',
+        labels={'x': 'TopicName', 'value': 'Number of Posts'},
+        title="Total Positive, Negative, and Neutral Posts per TopicName",
+        color_discrete_sequence=['red', 'grey', 'skyblue']
+    )
+    
+    # Display the horizontal bar plot
+    st.plotly_chart(fig_bar, width=800, height=600)
 
 
 # Define the Direct Feed page
