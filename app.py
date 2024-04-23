@@ -59,6 +59,38 @@ def plot_sentiments_by_topicname():
     
     return fig
 
+def plot_overall_sentiment_over_time(df):
+    # Group the DataFrame by date and sentiment category
+    grouped_df = (
+        df.groupby([df['CreatedTime'].dt.date, 'Sentiment'])
+        .size()
+        .unstack(fill_value=0)
+        .reset_index()
+    )
+
+    # Melt the DataFrame to long format for Plotly
+    melted_df = grouped_df.melt(id_vars=['CreatedTime'], var_name='Sentiment', value_name='Count')
+
+    # Create an interactive line plot using Plotly
+    fig = px.line(
+        melted_df,
+        x='CreatedTime',
+        y='Count',
+        color='Sentiment',
+        title='Overall Sentiment Over Time',
+        labels={'CreatedTime': 'Date', 'Count': 'Number of Posts', 'Sentiment': 'Sentiment'},
+        color_discrete_map={'Negative': 'red', 'Positive': 'green', 'Neutral': 'skyblue'}
+    )
+
+    # Customize the plot (optional)
+    fig.update_xaxes(title_text='Date')
+    fig.update_yaxes(title_text='Number of Posts')
+    
+    # Rotate x-axis labels for better readability
+    fig.update_xaxes(tickangle=45)
+
+    # Return the Plotly figure
+    return fig
 
     
 # Define the Dashboard page
@@ -253,6 +285,11 @@ def analytics():
     st.markdown(custom_css, unsafe_allow_html=True)
 
     # You can add other analytics content here
+
+    # Call the function and display the plot of overall sentiment over time
+    fig_sentiment_over_time = plot_overall_sentiment_over_time(df)
+    st.plotly_chart(fig_sentiment_over_time, use_container_width=True)
+
     # Basic Statistics
     st.subheader("Basic Statistics")
     st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
