@@ -128,8 +128,6 @@ def dashboard():
 
 
 
-
-
 # Define the Direct Feed page
 def direct_feed():
     st.title("Direct Feed")
@@ -322,46 +320,12 @@ def analytics():
         st.write("No data available for average sentiment by topic.")
 
 
-
-
     # Group by TopicName and Sentiment and calculate sentiment counts
 grouped_sentiments = df.groupby(['TopicName', 'Sentiment']).size().unstack(fill_value=0).reset_index()
 
 # Print statement to check if data is available
 print("Grouped Sentiments DataFrame:")
 print(grouped_sentiments)
-
-# Plot horizontal bar graph
-st.subheader("Sentiment Score by Topic")
-if not grouped_sentiments.empty:
-    fig, ax = plt.subplots(figsize=(10, 8))
-    topics = grouped_sentiments['TopicName']
-
-    # If 'Positive', 'Neutral', 'Negative' columns exist in the DataFrame
-    if all(sentiment in grouped_sentiments.columns for sentiment in ['Positive', 'Neutral', 'Negative']):
-        positive_counts = grouped_sentiments['Positive']
-        neutral_counts = grouped_sentiments['Neutral']
-        negative_counts = grouped_sentiments['Negative']
-
-        bar_positions = np.arange(len(topics))
-        ax.barh(bar_positions, positive_counts, height=0.2, color=colors['Positive'], label='Positive')
-        ax.barh(bar_positions, neutral_counts, height=0.2, left=positive_counts, color=colors['Neutral'], label='Neutral')
-        ax.barh(bar_positions, negative_counts, height=0.2, left=positive_counts + neutral_counts, color=colors['Negative'], label='Negative')
-
-        ax.set_yticks(bar_positions)
-        ax.set_yticklabels(topics)
-        ax.set_xlabel('Sentiment Count')
-        ax.set_ylabel('Topic Name')
-        ax.legend(title='Sentiment')
-        ax.set_title('Sentiment Score by Topic')
-        st.pyplot(fig)
-    else:
-        st.write("Sentiment data not available.")
-else:
-    st.write("No data available for sentiment score by topic.")
-
-
-
 
 # Main function to manage the Streamlit app
 def main():
