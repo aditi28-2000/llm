@@ -59,7 +59,7 @@ def plot_sentiments_by_topicname():
     # Update the plot size and customize the y-axis properties
     fig.update_layout(
         autosize=False,
-        width=800,
+        width=600,
         height=600,
         minreducedwidth=250,
         minreducedheight=250,
