@@ -113,7 +113,7 @@ def dashboard():
 
     # Display the horizontal bar plot
     st.title("Sentiment Distribution For Each Languge Model")
-    st.plotly_chart(plot_sentiments_by_topicname(), width=1000, height=800)
+    st.plotly_chart(plot_sentiments_by_topicname(), width=2000, height=2000)
  
     # Display sentiment distribution
     st.title("Overall Sentiment Distribution")
