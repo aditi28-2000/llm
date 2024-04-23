@@ -277,31 +277,36 @@ def analytics():
         st.write("No 'Text' column found in the DataFrame.")
 
     # Line graph of Reddit Sentiment Trend by topic
-    st.subheader("Sentiment Trend by Topic Over Time")
-    if "SubmissionTitle" in df.columns:
+    # Create a selectbox for choosing a TopicName
+    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    selected_topic = st.selectbox("Select a TopicName", topic_options)
+
+    # Filter the DataFrame based on the selected TopicName
+    filtered_df = df[df['TopicName'] == selected_topic]
+
+    # Line graph of sentiment trend by TopicName over time
+    st.subheader(f"Sentiment Trend by TopicName '{selected_topic}' Over Time")
+    if not filtered_df.empty:
+        # Group the filtered DataFrame by date and sentiment category
         grouped_df = (
-            df.groupby([df["CreatedTime"].dt.date, "Sentiment_Category"])
+            filtered_df.groupby([filtered_df['CreatedTime'].dt.date, 'Sentiment'])
             .size()
             .unstack(fill_value=0)
             .reset_index()
         )
+        # Plot the line graph
         fig, ax = plt.subplots()
-        ax.plot(
-            grouped_df["CreatedTime"], grouped_df["Negative"], label="Negative", color="red"
-        )
-        ax.plot(
-            grouped_df["CreatedTime"],
-            grouped_df["Positive"],
-            label="Positive",
-            color="green",
-        )
-        plt.xlabel("Date")
-        plt.ylabel("Number of Posts")
+        ax.plot(grouped_df['CreatedTime'], grouped_df['Negative'], label='Negative', color='red')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['Positive'], label='Positive', color='green')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['Neutral'], label='Neutral', color='skyblue')
+        plt.xlabel('Date')
+        plt.ylabel('Number of Posts')
         plt.xticks(rotation=45)
         plt.legend()
         st.pyplot(fig)
     else:
-        st.write("No 'SubmissionTitle' column found in the DataFrame.")
+        st.write(f"No data available for selected TopicName '{selected_topic}'.")
+
 
     # Word Cloud
     st.subheader("Word Cloud for All Data")
