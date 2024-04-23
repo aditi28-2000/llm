@@ -331,7 +331,7 @@ def analytics():
         x='TopicName',
         y='Sentiment_Score',
         color='TopicName',
-        title='Average Sentiment by TopicName',
+        title='',
         labels={'TopicName': 'Topic Name', 'Sentiment_Score': 'Average Sentiment'},
     )
 
