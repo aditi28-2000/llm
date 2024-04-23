@@ -281,10 +281,6 @@ def analytics():
     
         # Plot the line graph
         fig, ax = plt.subplots()
-
-        # Set the background color to match the system background
-        fig.patch.set_facecolor(st.get_option('theme.backgroundColor'))
-        ax.set_facecolor(st.get_option('theme.primaryColor'))
     
         # Plot each sentiment category as a line
         ax.plot(grouped_df['CreatedTime'], grouped_df['NEGATIVE'], label='Negative', color='red')
