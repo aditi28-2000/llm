@@ -112,6 +112,8 @@ def dashboard():
 
     # Rename the columns
     posts_comments_per_llm.columns = ["Language Model", "Total Posts", "Total Comments"]
+    # Sort the DataFrame by 'Total Posts' in descending order
+    posts_comments_per_llm = posts_comments_per_llm.sort_values(by='Total Posts', ascending=False)
 
     # Display the DataFrame with customized column titles
     st.dataframe(posts_comments_per_llm)
