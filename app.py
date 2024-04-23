@@ -306,7 +306,10 @@ def analytics():
         text = " ".join(df["Text"])
         
         # Generate the word cloud
-        wordcloud = WordCloud(width=800, height=400, background_color="white").generate(text)
+        # Set the background color to match the system background
+        background_color = st.get_option('theme.primaryColor')
+        wordcloud = WordCloud(width=800, height=400, background_color=background_color).generate(text)
+        # wordcloud = WordCloud(width=800, height=400, background_color="white").generate(text)
         
         # Plot the word cloud
         fig, ax = plt.subplots(figsize=(10, 5))
