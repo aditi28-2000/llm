@@ -55,16 +55,7 @@ def plot_sentiments_by_topicname():
     # Update the x-axis and y-axis titles
     fig.update_xaxes(title='LLM', automargin=True)
     fig.update_yaxes(title='Count', automargin=True)
-
-    # Update the plot size and customize the y-axis properties
-    fig.update_layout(
-        yaxis=dict(
-            title_text='Count',
-            titlefont=dict(size=30),
-            tickmode='array'
-        )
-    )
-    
+ 
     return fig
 
     
