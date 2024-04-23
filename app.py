@@ -105,6 +105,9 @@ def calculate_sentiment_percentages(df, topic_names):
     # Calculate the percentage of each sentiment category for each TopicName
     percentages = (grouped_df / total_posts_by_topic.values[:, None]) * 100
 
+    # Round percentages to two decimal places and add percentage sign
+    percentages = percentages.round(2).applymap(lambda x: f"{x:.2f}%")
+
     # Return the DataFrame with the percentages
     return percentages.reset_index()
     
@@ -309,7 +312,7 @@ def analytics():
     sentiment_percentages_df = calculate_sentiment_percentages(df, topic_names)
 
     # Display the results
-    st.subheader("Percentage of Positive, Negative, and Neutral Posts for Specified Topic Names")
+    st.subheader("Sentiment Statistics for popular LLMs")
     st.write(sentiment_percentages_df)
 
     # Call the function and display the plot of overall sentiment over time
