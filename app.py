@@ -117,15 +117,14 @@ def dashboard():
 
     st.dataframe(posts_comments_per_llm, hide_index=True)
 
-    # Sort the DataFrame by 'NumberOfComments' in descending order
-    #Make this table actually display the post w number of comments w sentiment
+    # Sort the DataFrame by 'NumberOfComments' in descending order    
     df_sorted_by_comments = df.sort_values(by='NumberOfComments', ascending=False)
 
-    # Select the top 10 most recent posts with the most comments
-    top_10_posts_with_most_comments = df_sorted_by_comments.head(10)
+    # Select the top 10 posts with the highest distinct number of comments
+    top_10_posts_with_highest_comments = df_sorted_by_comments.head(10)
 
-    # Display the table of the top 10 most recent posts with the most comments
-    st.dataframe(top_10_posts_with_most_comments, hide_index=True)
+    # Display the table of the top 10 posts with the highest distinct number of comments
+    st.dataframe(top_10_posts_with_highest_comments, hide_index=True)
 
 
 
