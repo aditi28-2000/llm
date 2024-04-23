@@ -341,7 +341,7 @@ def analytics():
     ax.set_title('Average Sentiment by TopicName')
     
     # Rotate x-axis labels for better readability
-    plt.xticks(rotation=30)
+    plt.xticks(rotation=60)
     
     # Display the plot
     st.pyplot(fig)
