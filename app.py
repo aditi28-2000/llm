@@ -55,6 +55,20 @@ def plot_sentiments_by_topicname():
     # Update the x-axis and y-axis titles
     fig.update_xaxes(title='LLM', automargin=True)
     fig.update_yaxes(title='Count', automargin=True)
+
+    # Update the plot size and customize the y-axis properties
+    fig.update_layout(
+        autosize=False,
+        width=450,
+        height=450,
+        minreducedwidth=250,
+        minreducedheight=250,
+        yaxis=dict(
+            title_text='Count',
+            titlefont=dict(size=30),
+            tickmode='array'
+        )
+    )
     
     return fig
 
@@ -113,7 +127,7 @@ def dashboard():
 
     # Display the horizontal bar plot
     st.title("Sentiment Distribution For Each Languge Model")
-    st.plotly_chart(plot_sentiments_by_topicname(), width=2000, height=2000)
+    st.plotly_chart(plot_sentiments_by_topicname(), width=800, height=700)
  
     # Display sentiment distribution
     st.title("Overall Sentiment Distribution")
