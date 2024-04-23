@@ -40,6 +40,20 @@ def load_data():
 df = load_data()
 ##############################################################################################
 
+def plot_sentiments_by_topicname():
+    # Group the DataFrame by 'TopicName' and 'Sentiment', and count the number of posts for each combination
+    sentiments_by_topicname = df.groupby(['TopicName', 'Sentiment']).size().reset_index(name='Count')
+    
+    # Create a grouped bar plot to display the total number of positive, negative, and neutral sentiments for each 'TopicName'
+    fig = px.bar(sentiments_by_topicname, x='TopicName', y='Count', color='Sentiment',
+                 barmode='group', title='Total Number of Positive, Negative, and Neutral Sentiments for Each TopicName')
+    
+    # Update the x-axis and y-axis titles
+    fig.update_xaxes(title='TopicName')
+    fig.update_yaxes(title='Count')
+    
+    return fig
+    
 # Define the Dashboard page
 import pandas as pd
 import plotly.express as px
@@ -129,19 +143,9 @@ def dashboard():
     # Group the DataFrame by 'TopicName' and 'Sentiment', and count the number of posts for each combination
     sentiment_grouped_df = df.groupby(['TopicName', 'Sentiment']).size().unstack(fill_value=0)
     
-    # Create a horizontal bar plot to display the total number of positive, negative, and neutral posts for each TopicName
-    fig_bar = px.bar(
-        sentiment_grouped_df,
-        x=sentiment_grouped_df.index,
-        y=['POSITIVE', 'NEGATIVE', 'NEUTRAL'],
-        orientation='h',
-        labels={'x': 'TopicName', 'value': 'Number of Posts'},
-        title="Total Positive, Negative, and Neutral Posts per TopicName",
-        color_discrete_sequence=['red', 'grey', 'skyblue']
-    )
     
     # Display the horizontal bar plot
-    st.plotly_chart(fig_bar, width=800, height=600)
+    st.plotly_chart(plot_sentiments_by_topicname(), width=800, height=600)
 
 
 # Define the Direct Feed page
