@@ -167,7 +167,7 @@ def dashboard():
     st.info(f'Total Posts in the Database: {total_posts}')
 
     # Display the horizontal bar plot
-    st.title("Sentiment Distribution For Each Languge Model")
+    st.title("Sentiment Distribution For Each Language Model")
     st.plotly_chart(plot_sentiments_by_topicname())
  
     # Display sentiment distribution
