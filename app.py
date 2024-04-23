@@ -82,7 +82,6 @@ def dashboard():
         posts_per_llm = df.groupby('TopicName')['SubmissionID'].nunique().reset_index()
         return total_posts, total_comments, positive_posts, negative_posts, neutral_posts, posts_per_llm
 
-
     
     # Calculate metrics
     total_posts, total_comments, positive_posts, negative_posts, neutral_posts, posts_per_llm = calculate_metrics(df)
@@ -91,8 +90,6 @@ def dashboard():
     # Display total posts
     st.info(f'Total Posts in the Database: {total_posts}')
     st.info(f'Total Comments in the Database: {total_comments}')
-
-
 
     # Display sentiment distribution
     st.title("Sentiment Distribution")
@@ -359,8 +356,6 @@ if not grouped_sentiments.empty:
         st.write("Sentiment data not available.")
 else:
     st.write("No data available for sentiment score by topic.")
-
-
 
 
 # Main function to manage the Streamlit app
