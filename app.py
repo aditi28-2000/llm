@@ -90,12 +90,9 @@ def dashboard():
 
     # Display total posts
     st.info(f'Total Posts in the Database: {total_posts}')
-    st.info(f'Total Comments in the Database: {total_comments}')
-
-
-
+ 
     # Display sentiment distribution
-    st.title("Sentiment Distribution")
+    st.title(" Overall Sentiment Distribution")
     labels = ['Negative Sentiment', 'Positive Sentiment', 'Neutral Sentiment']
     values = [negative_posts, positive_posts, neutral_posts]
     colors = ['grey', 'red', 'skyblue']
@@ -108,6 +105,9 @@ def dashboard():
 
     # Merge total_posts_per_llm and total_comments_per_llm on 'TopicName'
     posts_comments_per_llm = posts_per_llm.merge(total_comments_per_llm, on='TopicName')
+
+    unique_topic_count = df['TopicName'].nunique()
+    st.info(f'Distinct Language Models Captured in the Database : {unique_topic_coun}')
 
     # Rename the columns
     posts_comments_per_llm.columns = ["Language Model", "Total Posts", "Total Comments"]
