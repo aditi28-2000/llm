@@ -319,6 +319,7 @@ def analytics():
     st.write(sentiment_percentages_df)
 
     # Call the function and display the plot of overall sentiment over time
+    st.write("")
     st.subheader("Overall Sentiment Over Time")
     fig_sentiment_over_time = plot_overall_sentiment_over_time(df)
     st.plotly_chart(fig_sentiment_over_time, use_container_width=True)
@@ -375,6 +376,7 @@ def analytics():
         st.write(f"No data available for selected TopicName '{selected_topic}'.")
 
     # Word Cloud
+     st.write("")
     st.subheader("Word Cloud for All Data")
     if "Text" in df.columns:
         df["Text"].fillna("", inplace=True)
@@ -396,6 +398,7 @@ def analytics():
         st.write("No 'Text' column found in the DataFrame.")
 
     # Plot for average sentiment by TopicName
+    st.write("")
     st.subheader("Average Sentiment for each Language Model")
     # Calculate the average sentiment for each TopicName
     average_sentiment_df = df.groupby('TopicName')['Sentiment_Score'].mean().reset_index()
