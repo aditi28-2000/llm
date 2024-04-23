@@ -335,12 +335,6 @@ def analytics():
         labels={'TopicName': 'Topic Name', 'Sentiment_Score': 'Average Sentiment'},
         color_discrete_sequence=px.colors.qualitative.Viridis
     )
-    
-    # Customize the plot (optional)
-    fig.update_xaxes(title_text='Topic Name')
-    fig.update_yaxes(title_text='Average Sentiment')
-    fig.update_traces(marker_line_color='black', marker_line_width=1.5)
-    fig.update_layout(showlegend=False)
 
     # Rotate x-axis labels for better readability
     fig.update_xaxes(tickangle=60)
