@@ -165,8 +165,7 @@ def dashboard():
     total_posts, total_comments, positive_posts, negative_posts, neutral_posts, posts_per_llm = calculate_metrics(df)
 
     # Display total posts
-    st.info(f'Total Posts in the Analytics Database: {total_posts}, 
-    here 'others' specify discussion on Large Language Models in general')
+    st.info(f'Total Posts in the Analytics Database: {total_posts}')
 
     # Display the horizontal bar plot
     st.subheader("Sentiment Distribution For Each Language Model")
