@@ -258,7 +258,7 @@ def analytics():
 
     # Line graph of Reddit Sentiment Trend by topic
     # Create a selectbox for choosing a TopicName
-    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
     selected_topic = st.selectbox("Select a TopicName", topic_options)
 
     # Filter the DataFrame based on the selected TopicName
@@ -274,23 +274,22 @@ def analytics():
             .reset_index()
         )
         
-
-        # Plot the line graph
-        fig, ax = plt.subplots()
+        # Melt the DataFrame to long format for Plotly
+        melted_df = grouped_df.melt(id_vars=['CreatedTime'], var_name='Sentiment', value_name='Count')
         
-        # Plot each sentiment category as a line
-        ax.plot(grouped_df['CreatedTime'], grouped_df['NEGATIVE'], label='Negative', color='red')
-        ax.plot(grouped_df['CreatedTime'], grouped_df['POSITIVE'], label='Positive', color='green')
-        ax.plot(grouped_df['CreatedTime'], grouped_df['NEUTRAL'], label='Neutral', color='skyblue')
+        # Create an interactive line plot using Plotly
+        fig = px.line(
+            melted_df,
+            x='CreatedTime',
+            y='Count',
+            color='Sentiment',
+            title=f"Sentiment Trend by TopicName '{selected_topic}' Over Time",
+            labels={'CreatedTime': 'Date', 'Count': 'Number of Posts'},
+            color_discrete_map={'Negative': 'red', 'Positive': 'green', 'Neutral': 'skyblue'}
+        )
         
-        # Set labels and title
-        plt.xlabel('Date')
-        plt.ylabel('Number of Posts')
-        plt.xticks(rotation=45)
-        plt.legend()
-        
-        # Display the plot
-        st.pyplot(fig)
+        # Display the plot in Streamlit
+        st.plotly_chart(fig, use_container_width=True)
     else:
         st.write(f"No data available for selected TopicName '{selected_topic}'.")
 
