@@ -277,42 +277,27 @@ def analytics():
             .unstack(fill_value=0)
             .reset_index()
         )
-
-        # Check the contents of grouped_df and the hue variable
-        print("grouped_df:")
-        print(grouped_df)
-        print("Hue variable levels in Sentiment:")
-        print(grouped_df.columns[1:])  # Columns after 'CreatedTime' should be Sentiment levels
-
-        # Melt the DataFrame to long format for Seaborn
-        melted_df = grouped_df.melt(id_vars=['CreatedTime'], var_name='Sentiment', value_name='Count')
         
-        # Create a Seaborn line plot
+
+        # Plot the line graph
         fig, ax = plt.subplots()
-        sns.lineplot(
-            data=melted_df,
-            x='CreatedTime',
-            y='Count',
-            hue='Sentiment',
-            palette={'Negative': 'red', 'Positive': 'green', 'Neutral': 'skyblue'},
-            ax=ax
-        )
+        
+        # Plot each sentiment category as a line
+        ax.plot(grouped_df['CreatedTime'], grouped_df['NEGATIVE'], label='Negative', color='red')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['POSITIVE'], label='Positive', color='green')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['NEUTRAL'], label='Neutral', color='skyblue')
         
         # Set labels and title
-        ax.set_xlabel('Date')
-        ax.set_ylabel('Number of Posts')
-        ax.set_title(f"Sentiment Trend by TopicName '{selected_topic}' Over Time")
-        
-        # Rotate x-axis labels for better readability
+        plt.xlabel('Date')
+        plt.ylabel('Number of Posts')
         plt.xticks(rotation=45)
+        plt.legend()
         
-        # Add a legend
-        ax.legend(title='Sentiment')
-        
-        # Display the plot in Streamlit
+        # Display the plot
         st.pyplot(fig)
     else:
         st.write(f"No data available for selected TopicName '{selected_topic}'.")
+
     
     # Word Cloud
     st.subheader("Word Cloud for All Data")
