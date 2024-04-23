@@ -41,7 +41,7 @@ def load_data():
 
 # Load data from the database
 df = load_data()
-df = df[(df['Text'].notnull()) & (df['Text'] != 'NULL')]
+#df = df[(df['Text'].notnull()) & (df['Text'] != 'NULL')]
 ##############################################################################################
 
 def plot_sentiments_by_topicname():
