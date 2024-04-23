@@ -48,13 +48,14 @@ def plot_sentiments_by_topicname():
     color_sequence = {'NEGATIVE': 'red', 'POSITIVE': 'blue', 'NEUTRAL': 'skyblue'}
     
     # Create a grouped bar plot to display the total number of positive, negative, and neutral sentiments for each 'TopicName'
-    fig = px.bar(sentiments_by_topicname, x='TopicName', y='Count', color='Sentiment',
+    fig = px.bar(sentiments_by_topicname, y='TopicName', x='Count', color='Sentiment',
                  barmode='group', title='',
+                 orientation='h',
                  color_discrete_map=color_sequence)
     
-    # Update the x-axis and y-axis titles
-    fig.update_xaxes(title='LLM')
-    fig.update_yaxes(title='Count')
+    # Update the y-axis and x-axis titles
+    fig.update_yaxes(title='LLM')
+    fig.update_xaxes(title='Count')
     
     return fig
 
