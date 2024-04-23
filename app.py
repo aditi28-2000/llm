@@ -314,7 +314,7 @@ def analytics():
     #st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
     
     # Use the function to calculate the percentages
-    topic_names = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    topic_names = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini']
     sentiment_percentages_df = calculate_sentiment_percentages(df, topic_names)
 
     # Display the results
@@ -332,7 +332,7 @@ def analytics():
     st.subheader("Sentiment Trend for each LLM in 2024")
 
     # Create a selectbox for choosing a TopicName
-    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini']
     selected_topic = st.selectbox("Select a Language Model", topic_options)
 
     # Filter the DataFrame based on the selected TopicName
