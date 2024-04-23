@@ -333,7 +333,6 @@ def analytics():
         color='TopicName',
         title='Average Sentiment by TopicName',
         labels={'TopicName': 'Topic Name', 'Sentiment_Score': 'Average Sentiment'},
-        color_discrete_sequence=px.colors.qualitative.Viridis
     )
 
     # Rotate x-axis labels for better readability
