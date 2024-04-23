@@ -7,6 +7,7 @@ from wordcloud import WordCloud
 from textblob import TextBlob
 from sqlalchemy import create_engine
 from PIL import Image
+import seaborn as sns
 
 # DATABASE
 ######################################################################
@@ -256,11 +257,11 @@ def analytics():
     st.subheader("Basic Statistics")
     st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
 
+    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    selected_topic = st.selectbox("Select a TopicName", topic_options)
+    
     # Line graph of Reddit Sentiment Trend by topic
     # Create a selectbox for choosing a TopicName
-    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
-    selected_topic = st.selectbox("Select a TopicName", topic_options)
-
     # Filter the DataFrame based on the selected TopicName
     filtered_df = df[df['TopicName'] == selected_topic]
 
@@ -274,25 +275,35 @@ def analytics():
             .reset_index()
         )
         
-        # Melt the DataFrame to long format for Plotly
+        # Melt the DataFrame to long format for Seaborn
         melted_df = grouped_df.melt(id_vars=['CreatedTime'], var_name='Sentiment', value_name='Count')
         
-        # Create an interactive line plot using Plotly
-        fig = px.line(
-            melted_df,
+        # Create a Seaborn line plot
+        fig, ax = plt.subplots()
+        sns.lineplot(
+            data=melted_df,
             x='CreatedTime',
             y='Count',
-            color='Sentiment',
-            title=f"Sentiment Trend by TopicName '{selected_topic}' Over Time",
-            labels={'CreatedTime': 'Date', 'Count': 'Number of Posts'},
-            color_discrete_map={'Negative': 'red', 'Positive': 'green', 'Neutral': 'skyblue'}
+            hue='Sentiment',
+            palette={'Negative': 'red', 'Positive': 'green', 'Neutral': 'skyblue'},
+            ax=ax
         )
         
+        # Set labels and title
+        ax.set_xlabel('Date')
+        ax.set_ylabel('Number of Posts')
+        ax.set_title(f"Sentiment Trend by TopicName '{selected_topic}' Over Time")
+        
+        # Rotate x-axis labels for better readability
+        plt.xticks(rotation=45)
+        
+        # Add a legend
+        ax.legend(title='Sentiment')
+        
         # Display the plot in Streamlit
-        st.plotly_chart(fig, use_container_width=True)
+        st.pyplot(fig)
     else:
         st.write(f"No data available for selected TopicName '{selected_topic}'.")
-
     
     # Word Cloud
     st.subheader("Word Cloud for All Data")
