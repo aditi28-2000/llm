@@ -317,34 +317,7 @@ def analytics():
         st.write("No 'Text' column found in the DataFrame.")
 
 
-    # Group by topic name and calculate average sentiment polarity
-    topic_sentiments = df.groupby("TopicName")["Sentiment"].mean().reset_index()
-
-    # Bar graph of average sentiment by topic
-    st.subheader("Average Sentiment by Topic")
-    if not topic_sentiments.empty:
-        fig, ax = plt.subplots()
-        ax.bar(
-            topic_sentiments["TopicName"],
-            topic_sentiments["Sentiment"],
-            color="blue",
-        )
-        plt.xlabel("Topic")
-        plt.ylabel("Average Sentiment")
-        plt.title("Average Sentiment by Topic")
-        plt.xticks(rotation=45, fontsize=6)
-        st.pyplot(fig)
-    else:
-        st.write("No data available for average sentiment by topic.")
-
-
-    # Group by TopicName and Sentiment and calculate sentiment counts
-grouped_sentiments = df.groupby(['TopicName', 'Sentiment']).size().unstack(fill_value=0).reset_index()
-
-# Print statement to check if data is available
-print("Grouped Sentiments DataFrame:")
-print(grouped_sentiments)
-
+    
 # Main function to manage the Streamlit app
 def main():
     # Sidebar for navigation
