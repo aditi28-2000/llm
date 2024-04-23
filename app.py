@@ -424,12 +424,15 @@ def analytics():
 def main():
     # Sidebar for navigation
     st.sidebar.title("Navigation Panel")
-    st.sidebar.text(
-    "An interactive leaderboard that highlights trends, shifts, and rankings of various LLMs based on "
-    "the sentiment score computed on real-time streaming data. It provides insights into the performance "
-    "and popularity of different language models over time, allowing you to make data-driven decisions "
-    "and understand current trends."
-)
+    st.sidebar.text("An interactive leaderboard")
+    st.sidebar.text("that highlights trends, shifts,")
+    st.sidebar.text("and rankings of various LLMs based on")
+    st.sidebar.text("the sentiment score computed on real-time")
+    st.sidebar.text("streaming data.")
+    st.sidebar.text("It provides insights into the performance and popularity")
+    st.sidebar.text("of different language models over time.")
+    st.sidebar.text("Make data-driven decisions and understand")
+    st.sidebar.text("current trends.")
     page = st.sidebar.radio("Select a page:", ["Dashboard", "Analytics", "Direct Feed"])
     
     # Route to the selected page
