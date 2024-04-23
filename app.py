@@ -52,11 +52,12 @@ def plot_sentiments_by_topicname():
                  barmode='group', title='',
                  color_discrete_map=color_sequence)
     
-    # Update the x-axis and y-axis titles
+    # Update the x-axis and y-axis titles and set automargin to true
     fig.update_xaxes(title='LLM', automargin=True)
     fig.update_yaxes(title='Count', automargin=True)
- 
+    
     return fig
+
 
     
 # Define the Dashboard page
