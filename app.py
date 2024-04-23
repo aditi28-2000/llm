@@ -326,7 +326,7 @@ def analytics():
 
     
     # Line graph of Reddit Sentiment Trend by topic using Plotly
-    st.subheader("Sentiment Trend Over time for each LLM")
+    st.subheader("Sentiment Trend for each LLM in 2024")
 
     # Create a selectbox for choosing a TopicName
     topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
@@ -358,7 +358,7 @@ def analytics():
             x='CreatedTime',
             y='Count',
             color='Sentiment',
-            title=f"Sentiment Trend for {selected_topic} Over Time",
+            title=f"Sentiment Trend for {selected_topic}",
             labels={'CreatedTime': 'Date', 'Count': 'Number of Posts', 'Sentiment': 'Sentiment'},
             color_discrete_map={'NEGATIVE': 'red', 'POSITIVE': 'blue', 'NEUTRAL': 'skyblue'}
         )
