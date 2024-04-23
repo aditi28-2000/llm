@@ -145,8 +145,8 @@ def dashboard():
 
     
     # Display the horizontal bar plot
-    st.title("Total Number of Positive, Negative, and Neutral Sentiments for Each TopicName")
-    st.plotly_chart(plot_sentiments_by_topicname(), width=800, height=600)
+    st.title("Sentiment Distribution For Each Languge Model")
+    st.plotly_chart(plot_sentiments_by_topicname(), width=900, height=800)
 
 
 # Define the Direct Feed page
