@@ -259,7 +259,7 @@ def analytics():
     
     # Line graph of Reddit Sentiment Trend by topic
     # Create a selectbox for choosing a TopicName
-    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
     selected_topic = st.selectbox("Select a TopicName", topic_options)
 
     # Filter the DataFrame based on the selected TopicName
