@@ -320,6 +320,33 @@ def analytics():
     else:
         st.write("No 'Text' column found in the DataFrame.")
 
+    # Plot for average sentiment by TopicName
+    st.subheader("Average Sentiment by TopicName")
+    # Calculate the average sentiment for each TopicName
+    average_sentiment_df = df.groupby('TopicName')['Sentiment_Score'].mean().reset_index()
+    
+    # Plot the average sentiment by TopicName
+    fig, ax = plt.subplots()
+    sns.barplot(
+        x='TopicName',
+        y='Sentiment',
+        data=average_sentiment_df,
+        palette='viridis',
+        ax=ax
+    )
+    
+    # Set labels and title
+    ax.set_xlabel('TopicName')
+    ax.set_ylabel('Average Sentiment')
+    ax.set_title('Average Sentiment by TopicName')
+    
+    # Rotate x-axis labels for better readability
+    plt.xticks(rotation=45)
+    
+    # Display the plot
+    st.pyplot(fig)
+
+
     
 # Main function to manage the Streamlit app
 def main():
