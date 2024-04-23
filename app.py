@@ -329,7 +329,7 @@ def analytics():
     fig, ax = plt.subplots()
     sns.barplot(
         x='TopicName',
-        y='Sentiment',
+        y='Sentiment_Score',
         data=average_sentiment_df,
         palette='viridis',
         ax=ax
