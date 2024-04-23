@@ -79,7 +79,7 @@ def plot_overall_sentiment_over_time(df):
         color='Sentiment',
         title='Overall Sentiment Over Time',
         labels={'CreatedTime': 'Date', 'Count': 'Number of Posts', 'Sentiment': 'Sentiment'},
-        color_discrete_map={'Negative': 'red', 'Positive': 'green', 'Neutral': 'skyblue'}
+        color_discrete_map={'Negative': 'red', 'Positive': 'blue', 'Neutral': 'skyblue'}
     )
 
     # Customize the plot (optional)
