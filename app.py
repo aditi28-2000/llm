@@ -48,8 +48,8 @@ def plot_sentiments_by_topicname():
     color_sequence = {'NEGATIVE': 'red', 'POSITIVE': 'blue', 'NEUTRAL': 'skyblue'}
     
     # Create a grouped bar plot to display the total number of positive, negative, and neutral sentiments for each 'TopicName'
-    fig = px.bar(sentiments_by_topicname, x='TopicName', y='Count', color='Sentiment',
-                 barmode='group', title='Total Number of Positive, Negative, and Neutral Sentiments for Each TopicName',
+    fig = px.bar(sentiments_by_topicname, x='LLM', y='Count', color='Sentiment',
+                 barmode='group', title='',
                  color_discrete_map=color_sequence)
     
     # Update the x-axis and y-axis titles
@@ -115,7 +115,7 @@ def dashboard():
     st.title("Overall Sentiment Distribution")
     labels = ['Negative Sentiment', 'Positive Sentiment', 'Neutral Sentiment']
     values = [negative_posts, positive_posts, neutral_posts]
-    colors = ['grey', 'red', 'skyblue']
+    colors = ['skyblue', 'red', 'blue']
     fig_pie = px.pie(values=values, names=labels, hole=0.5, color_discrete_sequence=colors)
     fig_pie.update_traces(textposition='inside', textinfo='percent+label')
     st.plotly_chart(fig_pie, width=800, height=600)
