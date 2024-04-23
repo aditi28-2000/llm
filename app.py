@@ -274,15 +274,14 @@ def analytics():
             .reset_index()
         )
         
-        print(grouped_df)
 
         # Plot the line graph
         fig, ax = plt.subplots()
         
         # Plot each sentiment category as a line
-        ax.plot(grouped_df['CreatedTime'], grouped_df['Negative'], label='Negative', color='red')
-        ax.plot(grouped_df['CreatedTime'], grouped_df['Positive'], label='Positive', color='green')
-        ax.plot(grouped_df['CreatedTime'], grouped_df['Neutral'], label='Neutral', color='skyblue')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['NEGATIVE'], label='Negative', color='red')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['POSITIVE'], label='Positive', color='green')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['NEUTRAL'], label='Neutral', color='skyblue')
         
         # Set labels and title
         plt.xlabel('Date')
