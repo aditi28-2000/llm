@@ -403,11 +403,11 @@ def analytics():
     # Plot the average sentiment by TopicName using Plotly
     fig = px.bar(
         average_sentiment_df,
-        x='Language Model',
+        x='TopicName',
         y='Sentiment_Score',
         color='TopicName',
         title='',
-        labels={'TopicName': 'Topic Name', 'Sentiment_Score': 'Average Sentiment'},
+        labels={'TopicName': 'Language Model', 'Sentiment_Score': 'Average Sentiment'},
     )
 
     # Rotate x-axis labels for better readability
