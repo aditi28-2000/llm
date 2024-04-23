@@ -120,12 +120,13 @@ def dashboard():
     # Sort the DataFrame by 'NumberOfComments' in descending order    
     df_sorted_by_comments = df.sort_values(by='NumberOfComments', ascending=False)
 
+    # Remove duplicate rows based on 'NumberOfComments' to keep only distinct ones
+    distinct_comments_df = df_sorted_by_comments.drop_duplicates(subset='NumberOfComments', keep='first')
     # Select the top 10 posts with the highest distinct number of comments
-    top_10_posts_with_highest_comments = df_sorted_by_comments.head(10)
+    top_10_posts_with_highest_distinct_comments = distinct_comments_df.head(10)
 
-    # Display the table of the top 10 posts with the highest distinct number of comments
-    st.dataframe(top_10_posts_with_highest_comments, hide_index=True)
-
+    # Display the top 10 posts with the highest distinct number of comments
+    st.dataframe(top_10_posts_with_highest_distinct_comments, hide_index=True)
 
 
 
