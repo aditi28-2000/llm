@@ -116,7 +116,7 @@ def dashboard():
     posts_comments_per_llm = posts_comments_per_llm.sort_values(by='Total Posts', ascending=False)
 
     # Display the DataFrame with customized column titles
-    st.dataframe(posts_comments_per_llm)
+    st.dataframe(posts_comments_per_llm, index=False)
 
     # Sort the DataFrame by 'NumberOfComments' in descending order
     #Make this table actually display the post w number of comments w sentiment
