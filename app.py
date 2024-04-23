@@ -424,7 +424,7 @@ def analytics():
 def main():
     st.sidebar.title("Navigation Panel")
     # Add an image to the sidebar
-    st.sidebar.image("image.jpg", use_column_width=True)
+    st.sidebar.image("image.jpg", use_column_width=True, width=100, height=100)
     page = st.sidebar.radio("Select a page:", ["Dashboard", "Analytics", "Direct Feed"])
     # Route to the selected page
     if page == "Dashboard":
