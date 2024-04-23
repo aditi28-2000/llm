@@ -258,47 +258,46 @@ def analytics():
     st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
     
     # Line graph of Reddit Sentiment Trend by topic
-# Create a selectbox for choosing a TopicName
-topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
-selected_topic = st.selectbox("Select a TopicName", topic_options)
+    # Create a selectbox for choosing a TopicName
+    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    selected_topic = st.selectbox("Select a TopicName", topic_options)
 
-# Filter the DataFrame based on the selected TopicName
-filtered_df = df[df['TopicName'] == selected_topic]
+    # Filter the DataFrame based on the selected TopicName
+    filtered_df = df[df['TopicName'] == selected_topic]
 
-# Filter the DataFrame to only include data from January 2024
-filtered_df = filtered_df[
-    (filtered_df['CreatedTime'].dt.month == 1) &
-    (filtered_df['CreatedTime'].dt.year == 2024)
-]
+    # Filter the DataFrame further to include only data from January 2024 to present
+    start_date = pd.to_datetime("2024-01-01")
+    filtered_df = filtered_df[filtered_df['CreatedTime'] >= start_date]
 
-# Check if filtered DataFrame is not empty
-if not filtered_df.empty:
-    # Group the filtered DataFrame by date and sentiment
-    grouped_df = (
-        filtered_df.groupby([filtered_df['CreatedTime'].dt.date, 'Sentiment'])
-        .size()
-        .unstack(fill_value=0)
-        .reset_index()
-    )
+    # Check if filtered DataFrame is not empty
+    if not filtered_df.empty:
+        # Group the filtered DataFrame by date and sentiment
+        grouped_df = (
+            filtered_df.groupby([filtered_df['CreatedTime'].dt.date, 'Sentiment'])
+            .size()
+            .unstack(fill_value=0)
+            .reset_index()
+        )
     
-    # Plot the line graph
-    fig, ax = plt.subplots()
+        # Plot the line graph
+        fig, ax = plt.subplots()
     
-    # Plot each sentiment category as a line
-    ax.plot(grouped_df['CreatedTime'], grouped_df['NEGATIVE'], label='Negative', color='red')
-    ax.plot(grouped_df['CreatedTime'], grouped_df['POSITIVE'], label='Positive', color='green')
-    ax.plot(grouped_df['CreatedTime'], grouped_df['NEUTRAL'], label='Neutral', color='skyblue')
+        # Plot each sentiment category as a line
+        ax.plot(grouped_df['CreatedTime'], grouped_df['NEGATIVE'], label='Negative', color='red')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['POSITIVE'], label='Positive', color='green')
+        ax.plot(grouped_df['CreatedTime'], grouped_df['NEUTRAL'], label='Neutral', color='skyblue')
     
-    # Set labels and title
-    plt.xlabel('Date')
-    plt.ylabel('Number of Posts')
-    plt.xticks(rotation=45)
-    plt.legend()
+        # Set labels and title
+        plt.xlabel('Date')
+        plt.ylabel('Number of Posts')
+        plt.xticks(rotation=45)
+        plt.legend()
     
-    # Display the plot
-    st.pyplot(fig)
-else:
-    st.write(f"No data available for selected TopicName '{selected_topic}' in January 2024.")
+        # Display the plot
+        st.pyplot(fig)
+    else:
+        st.write(f"No data available for selected TopicName '{selected_topic}'.")
+
     
     # Word Cloud
     st.subheader("Word Cloud for All Data")
