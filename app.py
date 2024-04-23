@@ -308,7 +308,7 @@ def analytics():
         # Generate the word cloud
         # Set the background color to match the system background
         background_color = st.get_option('theme.primaryColor')
-        wordcloud = WordCloud(width=800, height=400, background_color=background_color,  contour_color=None, contour_width=0 ).generate(text)
+        wordcloud = WordCloud(width=800, height=400, background_color=background_color,  contour_color=None, contour_width=0, mode='RGBA' ).generate(text)
         # wordcloud = WordCloud(width=800, height=400, background_color="white").generate(text)
         
         # Plot the word cloud
