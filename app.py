@@ -256,9 +256,6 @@ def analytics():
     # Basic Statistics
     st.subheader("Basic Statistics")
     st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
-
-    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
-    selected_topic = st.selectbox("Select a TopicName", topic_options)
     
     # Line graph of Reddit Sentiment Trend by topic
     # Create a selectbox for choosing a TopicName
