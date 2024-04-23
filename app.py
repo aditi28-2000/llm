@@ -46,7 +46,7 @@ def plot_sentiments_by_topicname():
     
     # Create a grouped bar plot to display the total number of positive, negative, and neutral sentiments for each 'TopicName'
     fig = px.bar(sentiments_by_topicname, x='TopicName', y='Count', color='Sentiment',
-                 barmode='group', title='Total Number of Positive, Negative, and Neutral Sentiments for Each TopicName')
+                 barmode='group', title='')
     
     # Update the x-axis and y-axis titles
     fig.update_xaxes(title='TopicName')
@@ -142,9 +142,10 @@ def dashboard():
 
     # Group the DataFrame by 'TopicName' and 'Sentiment', and count the number of posts for each combination
     sentiment_grouped_df = df.groupby(['TopicName', 'Sentiment']).size().unstack(fill_value=0)
-    
+
     
     # Display the horizontal bar plot
+    st.title("Total Number of Positive, Negative, and Neutral Sentiments for Each TopicName")
     st.plotly_chart(plot_sentiments_by_topicname(), width=800, height=600)
 
 
