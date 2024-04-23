@@ -8,6 +8,8 @@ from sqlalchemy import create_engine
 from PIL import Image
 import seaborn as sns
 from datetime import datetime
+import plotly.graph_objects as go
+from wordcloud import WordCloud
 
 # DATABASE
 ######################################################################
