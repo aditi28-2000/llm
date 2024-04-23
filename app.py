@@ -283,7 +283,7 @@ def analytics():
         fig, ax = plt.subplots()
 
         # Set the background color to match the system background
-        fig.patch.set_facecolor(st.get_option('theme.primaryColor'))
+        fig.patch.set_facecolor(st.get_option('theme.backgroundColor'))
         ax.set_facecolor(st.get_option('theme.primaryColor'))
     
         # Plot each sentiment category as a line
