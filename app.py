@@ -167,11 +167,11 @@ def dashboard():
     st.info(f'Total Posts in the Database: {total_posts}')
 
     # Display the horizontal bar plot
-    st.title("Sentiment Distribution For Each Language Model")
+    st.subheader("Sentiment Distribution For Each Language Model")
     st.plotly_chart(plot_sentiments_by_topicname())
  
     # Display sentiment distribution
-    st.title("Overall Sentiment Distribution")
+    st.subheader("Overall Sentiment Distribution")
     labels = ['Negative Sentiment', 'Positive Sentiment', 'Neutral Sentiment']
     values = [negative_posts, positive_posts, neutral_posts]
     colors = ['skyblue', 'red', 'blue']
