@@ -209,7 +209,7 @@ def direct_feed():
                 <div class="rectangular-box">
                     <p><strong>Submission Title:</strong> {row['SubmissionTitle']}</p>
                     <p><strong>Sentiment:</strong> {row['Sentiment']}</p>
-                    <p><strong>Topic Name:</strong> {row['TopicName']}</p>
+                    <p><strong>Large Languge Model:</strong> {row['TopicName']}</p>
                     <p><strong>Text:</strong> {row['Text']}</p>
                 </div>
                 """,
