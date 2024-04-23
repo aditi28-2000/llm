@@ -186,7 +186,7 @@ def dashboard():
     posts_comments_per_llm = posts_per_llm.merge(total_comments_per_llm, on='TopicName')
 
     unique_topic_count = df['TopicName'].nunique()
-    st.info(f"Distinct Language Models Captured in the Database: {unique_topic_count}")
+    st.info(f"Distinct Language Models Captured in the Database: {unique_topic_count-1}")
 
     # Rename the columns
     posts_comments_per_llm.columns = ["Language Model", "Total Posts", "Total Comments"]
