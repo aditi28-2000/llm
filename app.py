@@ -77,7 +77,7 @@ def plot_overall_sentiment_over_time(df):
         x='CreatedTime',
         y='Count',
         color='Sentiment',
-        title='Overall Sentiment Over Time',
+        title='',
         labels={'CreatedTime': 'Date', 'Count': 'Number of Posts', 'Sentiment': 'Sentiment'},
         color_discrete_map={'NEGATIVE': 'red', 'POSITIVE': 'blue', 'NEUTRAL': 'skyblue'}
     )
@@ -91,6 +91,22 @@ def plot_overall_sentiment_over_time(df):
 
     # Return the Plotly figure
     return fig
+
+def calculate_sentiment_percentages(df, topic_names):
+    # Filter the DataFrame to include only the specified topic names
+    df_filtered = df[df['TopicName'].isin(topic_names)]
+
+    # Group the data by TopicName and Sentiment
+    grouped_df = df_filtered.groupby(['TopicName', 'Sentiment']).size().unstack(fill_value=0)
+
+    # Calculate the total number of posts for each TopicName
+    total_posts_by_topic = grouped_df.sum(axis=1)
+
+    # Calculate the percentage of each sentiment category for each TopicName
+    percentages = (grouped_df / total_posts_by_topic[:, None]) * 100
+
+    # Return the DataFrame with the percentages
+    return percentages.reset_index()
     
 # Define the Dashboard page
 import pandas as pd
@@ -284,14 +300,23 @@ def analytics():
     st.markdown(custom_css, unsafe_allow_html=True)
 
     # You can add other analytics content here
+    # Basic Statistics
+    #st.subheader("Basic Statistics")
+    #st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
+    
+    # Use the function to calculate the percentages
+    topic_names = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    sentiment_percentages_df = calculate_sentiment_percentages(df, topic_names)
+
+    # Display the results
+    st.subheader("Percentage of Positive, Negative, and Neutral Posts for Specified Topic Names")
+    st.write(sentiment_percentages_df)
 
     # Call the function and display the plot of overall sentiment over time
+    st.title("Overall Sentiment Over Time")
     fig_sentiment_over_time = plot_overall_sentiment_over_time(df)
     st.plotly_chart(fig_sentiment_over_time, use_container_width=True)
 
-    # Basic Statistics
-    st.subheader("Basic Statistics")
-    st.write(df.drop(columns=["CreatedTime"]).describe())  # Exclude 'CreatedTime' column
     
     # Line graph of Reddit Sentiment Trend by topic
     # Create a selectbox for choosing a TopicName
