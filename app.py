@@ -103,7 +103,7 @@ def calculate_sentiment_percentages(df, topic_names):
     total_posts_by_topic = grouped_df.sum(axis=1)
 
     # Calculate the percentage of each sentiment category for each TopicName
-    percentages = (grouped_df / total_posts_by_topic[:, None]) * 100
+    percentages = (grouped_df / total_posts_by_topic.values[:, None]) * 100
 
     # Return the DataFrame with the percentages
     return percentages.reset_index()
