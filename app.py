@@ -68,24 +68,29 @@ def plot_overall_sentiment_over_time(df):
         .reset_index()
     )
 
-    # Create a line plot using pyplot
-    fig, ax = plt.subplots(figsize=(10, 6))
+    # Melt the DataFrame to long format for Plotly
+    melted_df = grouped_df.melt(id_vars=['CreatedTime'], var_name='Sentiment', value_name='Count')
 
-    # Plot each sentiment category
-    ax.plot(grouped_df['CreatedTime'], grouped_df['NEGATIVE'], label='Negative', color='red')
-    ax.plot(grouped_df['CreatedTime'], grouped_df['POSITIVE'], label='Positive', color='blue')
-    ax.plot(grouped_df['CreatedTime'], grouped_df['NEUTRAL'], label='Neutral', color='skyblue')
+    # Create an interactive line plot using Plotly
+    fig = px.line(
+        melted_df,
+        x='CreatedTime',
+        y='Count',
+        color='Sentiment',
+        title='Overall Sentiment Over Time',
+        labels={'CreatedTime': 'Date', 'Count': 'Number of Posts', 'Sentiment': 'Sentiment'},
+        color_discrete_map={'Negative': 'red', 'Positive': 'blue', 'Neutral': 'skyblue'}
+    )
 
     # Customize the plot
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Number of Posts')
-    ax.set_title('Overall Sentiment Over Time')
-    ax.legend()
-    plt.xticks(rotation=45)
+    fig.update_xaxes(title_text='Date')
+    fig.update_yaxes(title_text='Number of Posts')
 
-    # Return the figure
+    # Rotate x-axis labels for better readability
+    fig.update_xaxes(tickangle=45)
+
+    # Return the Plotly figure
     return fig
-
     
 # Define the Dashboard page
 import pandas as pd
