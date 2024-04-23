@@ -53,8 +53,8 @@ def plot_sentiments_by_topicname():
                  color_discrete_map=color_sequence)
     
     # Update the x-axis and y-axis titles
-    fig.update_xaxes(title='LLM')
-    fig.update_yaxes(title='Count')
+    fig.update_xaxes(title='LLM', automargin=True)
+    fig.update_yaxes(title='Count', automargin=True)
     
     return fig
 
