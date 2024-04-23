@@ -59,10 +59,10 @@ def plot_sentiments_by_topicname():
     # Update the plot size and customize the y-axis properties
     fig.update_layout(
         autosize=False,
-        width=1000,
-        height=800,
-        minreducedwidth=800,
-        minreducedheight=800,
+        width=800,
+        height=600,
+        minreducedwidth=250,
+        minreducedheight=250,
         yaxis=dict(
             title_text='Count',
             titlefont=dict(size=30),
