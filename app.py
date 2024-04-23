@@ -319,17 +319,17 @@ def analytics():
     st.write(sentiment_percentages_df)
 
     # Call the function and display the plot of overall sentiment over time
-    st.title("Overall Sentiment Over Time")
+    st.subheader("Overall Sentiment Over Time")
     fig_sentiment_over_time = plot_overall_sentiment_over_time(df)
     st.plotly_chart(fig_sentiment_over_time, use_container_width=True)
 
     
     # Line graph of Reddit Sentiment Trend by topic using Plotly
-    st.subheader("Sentiment Trend by Topic")
+    st.subheader("Sentiment Trend Over time for each LLM")
 
     # Create a selectbox for choosing a TopicName
     topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
-    selected_topic = st.selectbox("Select a TopicName", topic_options)
+    selected_topic = st.selectbox("Select a Language Model", topic_options)
 
     # Filter the DataFrame based on the selected TopicName
     filtered_df = df[df['TopicName'] == selected_topic]
@@ -396,14 +396,14 @@ def analytics():
         st.write("No 'Text' column found in the DataFrame.")
 
     # Plot for average sentiment by TopicName
-    st.subheader("Average Sentiment by TopicName")
+    st.subheader("Average Sentiment for each Language Model")
     # Calculate the average sentiment for each TopicName
     average_sentiment_df = df.groupby('TopicName')['Sentiment_Score'].mean().reset_index()
     
     # Plot the average sentiment by TopicName using Plotly
     fig = px.bar(
         average_sentiment_df,
-        x='TopicName',
+        x='Language Model',
         y='Sentiment_Score',
         color='TopicName',
         title='',
