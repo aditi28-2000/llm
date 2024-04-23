@@ -273,7 +273,8 @@ def analytics():
             .unstack(fill_value=0)
             .reset_index()
         )
-    print(grouped_df)
+        
+        print(grouped_df)
 
         # Plot the line graph
         fig, ax = plt.subplots()
