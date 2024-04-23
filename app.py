@@ -359,7 +359,7 @@ def analytics():
             color='Sentiment',
             title=f"Sentiment Trend for {selected_topic} Over Time",
             labels={'CreatedTime': 'Date', 'Count': 'Number of Posts', 'Sentiment': 'Sentiment'},
-            color_discrete_map={'Negative': 'red', 'Positive': 'blue', 'Neutral': 'skyblue'}
+            color_discrete_map={'NEGATIVE': 'red', 'POSITIVE': 'blue', 'NEUTRAL': 'skyblue'}
         )
 
         # Customize the plot (optional)
