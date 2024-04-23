@@ -325,27 +325,28 @@ def analytics():
     # Calculate the average sentiment for each TopicName
     average_sentiment_df = df.groupby('TopicName')['Sentiment_Score'].mean().reset_index()
     
-    # Plot the average sentiment by TopicName
-    fig, ax = plt.subplots()
-    sns.barplot(
+    # Plot the average sentiment by TopicName using Plotly
+    fig = px.bar(
+        average_sentiment_df,
         x='TopicName',
         y='Sentiment_Score',
-        data=average_sentiment_df,
-        palette='viridis',
-        ax=ax
+        color='TopicName',
+        title='Average Sentiment by TopicName',
+        labels={'TopicName': 'Topic Name', 'Sentiment_Score': 'Average Sentiment'},
+        color_discrete_sequence=px.colors.qualitative.Viridis
     )
     
-    # Set labels and title
-    ax.set_xlabel('TopicName')
-    ax.set_ylabel('Average Sentiment')
-    ax.set_title('Average Sentiment by TopicName')
-    
-    # Rotate x-axis labels for better readability
-    plt.xticks(rotation=60)
-    
-    # Display the plot
-    st.pyplot(fig)
+    # Customize the plot (optional)
+    fig.update_xaxes(title_text='Topic Name')
+    fig.update_yaxes(title_text='Average Sentiment')
+    fig.update_traces(marker_line_color='black', marker_line_width=1.5)
+    fig.update_layout(showlegend=False)
 
+    # Rotate x-axis labels for better readability
+    fig.update_xaxes(tickangle=60)
+    
+    # Display the plot in Streamlit
+    st.plotly_chart(fig, use_container_width=True)
 
     
 # Main function to manage the Streamlit app
