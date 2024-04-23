@@ -165,7 +165,8 @@ def dashboard():
     total_posts, total_comments, positive_posts, negative_posts, neutral_posts, posts_per_llm = calculate_metrics(df)
 
     # Display total posts
-    st.info(f'Total Posts in the Analytics Database: {total_posts}')
+    st.info(f'Total Posts in the Analytics Database: {total_posts}, 
+    here 'others' specify discussion on Large Language Models in general')
 
     # Display the horizontal bar plot
     st.subheader("Sentiment Distribution For Each Language Model")
@@ -266,7 +267,7 @@ def direct_feed():
                 <div class="rectangular-box">
                     <p><strong>Submission Title:</strong> {row['SubmissionTitle']}</p>
                     <p><strong>Sentiment:</strong> {row['Sentiment']}</p>
-                    <p><strong>Large Languge Model:</strong> {row['TopicName']}</p>
+                    <p><strong>Large Language Model:</strong> {row['TopicName']}</p>
                     <p><strong>Text:</strong> {row['Text']}</p>
                 </div>
                 """,
