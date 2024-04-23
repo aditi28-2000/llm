@@ -376,7 +376,7 @@ def analytics():
         st.write(f"No data available for selected TopicName '{selected_topic}'.")
 
     # Word Cloud
-     st.write("")
+    st.write("")
     st.subheader("Word Cloud for All Data")
     if "Text" in df.columns:
         df["Text"].fillna("", inplace=True)
