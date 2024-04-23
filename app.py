@@ -125,7 +125,7 @@ def dashboard():
     top_10_posts_with_most_comments = df_sorted_by_comments.head(10)
 
     # Display the table of the top 10 most recent posts with the most comments
-    st.write(top_10_posts_with_most_comments, hide_index=True)
+    st.dataframe(top_10_posts_with_most_comments, hide_index=True)
 
 
 
