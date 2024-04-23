@@ -44,15 +44,20 @@ def plot_sentiments_by_topicname():
     # Group the DataFrame by 'TopicName' and 'Sentiment', and count the number of posts for each combination
     sentiments_by_topicname = df.groupby(['TopicName', 'Sentiment']).size().reset_index(name='Count')
     
+    # Define the color sequence for the plot
+    color_sequence = {'NEGATIVE': 'red', 'POSITIVE': 'blue', 'NEUTRAL': 'skyblue'}
+    
     # Create a grouped bar plot to display the total number of positive, negative, and neutral sentiments for each 'TopicName'
     fig = px.bar(sentiments_by_topicname, x='TopicName', y='Count', color='Sentiment',
-                 barmode='group', title='')
+                 barmode='group', title='Total Number of Positive, Negative, and Neutral Sentiments for Each TopicName',
+                 color_discrete_map=color_sequence)
     
     # Update the x-axis and y-axis titles
     fig.update_xaxes(title='TopicName')
     fig.update_yaxes(title='Count')
     
     return fig
+
     
 # Define the Dashboard page
 import pandas as pd
