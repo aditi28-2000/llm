@@ -262,6 +262,9 @@ def analytics():
     
     # Line graph of Reddit Sentiment Trend by topic
     # Create a selectbox for choosing a TopicName
+    topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
+    selected_topic = st.selectbox("Select a TopicName", topic_options)
+
     # Filter the DataFrame based on the selected TopicName
     filtered_df = df[df['TopicName'] == selected_topic]
 
@@ -274,7 +277,13 @@ def analytics():
             .unstack(fill_value=0)
             .reset_index()
         )
-        
+
+        # Check the contents of grouped_df and the hue variable
+        print("grouped_df:")
+        print(grouped_df)
+        print("Hue variable levels in Sentiment:")
+        print(grouped_df.columns[1:])  # Columns after 'CreatedTime' should be Sentiment levels
+
         # Melt the DataFrame to long format for Seaborn
         melted_df = grouped_df.melt(id_vars=['CreatedTime'], var_name='Sentiment', value_name='Count')
         
