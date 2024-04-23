@@ -115,11 +115,8 @@ def dashboard():
     # Sort the DataFrame by 'Total Posts' in descending order
     posts_comments_per_llm = posts_comments_per_llm.sort_values(by='Total Posts', ascending=False)
 
-    try:
-        st.dataframe(posts_comments_per_llm, index=False)
-    catch Exception as e:
-        print("Error displaying DataFrame:", e)
-
+    st.dataframe(posts_comments_per_llm)
+    st.dataframe(posts_comments_per_llm.style.hide(axis="index"))
 
     # Sort the DataFrame by 'NumberOfComments' in descending order
     #Make this table actually display the post w number of comments w sentiment
