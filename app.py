@@ -324,7 +324,9 @@ def analytics():
     st.plotly_chart(fig_sentiment_over_time, use_container_width=True)
 
     
-    # Line graph of Reddit Sentiment Trend by topic
+    # Line graph of Reddit Sentiment Trend by topic using Plotly
+    st.subheader("Sentiment Trend by Topic")
+
     # Create a selectbox for choosing a TopicName
     topic_options = ['GPT', 'CharacterAI', 'LLaMA', 'StableDiffusion', 'others', 'ClaudeAI', 'GoogleGemini', 'OpenAI']
     selected_topic = st.selectbox("Select a TopicName", topic_options)
@@ -345,23 +347,30 @@ def analytics():
             .unstack(fill_value=0)
             .reset_index()
         )
-    
-        # Plot the line graph
-        fig, ax = plt.subplots()
-    
-        # Plot each sentiment category as a line
-        ax.plot(grouped_df['CreatedTime'], grouped_df['NEGATIVE'], label='Negative', color='red')
-        ax.plot(grouped_df['CreatedTime'], grouped_df['POSITIVE'], label='Positive', color='green')
-        ax.plot(grouped_df['CreatedTime'], grouped_df['NEUTRAL'], label='Neutral', color='skyblue')
-    
-        # Set labels and title
-        plt.xlabel('Date')
-        plt.ylabel('Number of Posts')
-        plt.xticks(rotation=45)
-        plt.legend()
-    
-        # Display the plot
-        st.pyplot(fig)
+
+        # Melt the grouped DataFrame to long format for Plotly
+        melted_df = grouped_df.melt(id_vars=['CreatedTime'], var_name='Sentiment', value_name='Count')
+
+        # Create an interactive line plot using Plotly
+        fig = px.line(
+            melted_df,
+            x='CreatedTime',
+            y='Count',
+            color='Sentiment',
+            title=f"Sentiment Trend for {selected_topic} Over Time",
+            labels={'CreatedTime': 'Date', 'Count': 'Number of Posts', 'Sentiment': 'Sentiment'},
+            color_discrete_map={'Negative': 'red', 'Positive': 'blue', 'Neutral': 'skyblue'}
+        )
+
+        # Customize the plot (optional)
+        fig.update_xaxes(title_text='Date')
+        fig.update_yaxes(title_text='Number of Posts')
+
+        # Rotate x-axis labels for better readability
+        fig.update_xaxes(tickangle=45)
+
+        # Display the Plotly plot in Streamlit
+        st.plotly_chart(fig, use_container_width=True)
     else:
         st.write(f"No data available for selected TopicName '{selected_topic}'.")
 
