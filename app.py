@@ -422,7 +422,8 @@ def analytics():
     
 # Main function to manage the Streamlit app
 def main():
-    # Sidebar for navigation
+    page = st.sidebar.radio("Select a page:", ["Dashboard", "Analytics", "Direct Feed"])
+       # Sidebar for navigation
     st.sidebar.title("Navigation Panel")
     st.sidebar.text("An interactive leaderboard")
     st.sidebar.text("that highlights trends, shifts,")
@@ -433,8 +434,6 @@ def main():
     st.sidebar.text("of different language models over time.")
     st.sidebar.text("Make data-driven decisions and understand")
     st.sidebar.text("current trends.")
-    page = st.sidebar.radio("Select a page:", ["Dashboard", "Analytics", "Direct Feed"])
-    
     # Route to the selected page
     if page == "Dashboard":
         dashboard()
