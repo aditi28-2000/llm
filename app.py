@@ -13,34 +13,48 @@ from wordcloud import WordCloud
 
 # DATABASE
 ######################################################################
-# Retrieve database credentials from secrets.toml
-server = st.secrets["server"]
-database = st.secrets["database"]
-username = st.secrets["username"]
-password = st.secrets["password"]
-
-# Construct the connection string using pymysql dialect
-connection_string = f"mysql+pymysql://{username}:{password}@{server}/{database}"
-
-def get_connection():
-    return create_engine(connection_string)
-
-# Get database connection
-engine = get_connection()
-
-def load_data():
-    query = """
-        SELECT * FROM sentiment_analysis;
-    """
+# Load data from the JSON file
+def load_data_from_json():
+    json_file_path = "finalsentiment_data.json"
     try:
-        df = pd.read_sql(query, engine)
+        # Load data from JSON file to a DataFrame
+        df = pd.read_json(json_file_path)
         return df
     except Exception as e:
-        st.error(f"Error loading data from the database: {e}")
+        st.error(f"Error loading data from JSON file: {e}")
         return pd.DataFrame()
 
+# Load data into the DataFrame
+df = load_data_from_json()
+
+# Retrieve database credentials from secrets.toml
+# server = st.secrets["server"]
+# database = st.secrets["database"]
+# username = st.secrets["username"]
+# password = st.secrets["password"]
+
+# Construct the connection string using pymysql dialect
+# connection_string = f"mysql+pymysql://{username}:{password}@{server}/{database}"
+
+#def get_connection():
+    #return create_engine(connection_string)
+
+# Get database connection
+#engine = get_connection()
+
+#def load_data():
+    #query = """
+        #SELECT * FROM sentiment_analysis;
+    #"""
+    #try:
+        #df = pd.read_sql(query, engine)
+        #return df
+    #except Exception as e:
+        #st.error(f"Error loading data from the database: {e}")
+        #return pd.DataFrame()
+
 # Load data from the database
-df = load_data()
+#df = load_data()
 #df = df[(df['Text'].notnull()) & (df['Text'] != 'NULL')]
 ##############################################################################################
 
