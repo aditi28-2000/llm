@@ -46,7 +46,9 @@ def plot_sentiments_by_topicname():
     
     return fig
 
-def plot_overall_sentiment_over_time(df):
+def plot_overall_sentiment_over_time(df):    
+    # Convert the CreatedTime column to datetime format
+    df['CreatedTime'] = pd.to_datetime(df['CreatedTime'], errors='coerce')
     # Group the DataFrame by date and sentiment category
     grouped_df = (
         df.groupby([df['CreatedTime'].dt.date, 'Sentiment'])
